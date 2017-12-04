@@ -5,6 +5,7 @@ Created on Nov 8, 2017
 
 Containing test script of test scenario 04: keyrings wallets.
 """
+# noqa: E402, E501
 
 import json
 import os.path
@@ -12,11 +13,11 @@ import sys
 from indy import signus
 from indy.error import IndyError
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from libraries.constant import Constant, Colors, Roles
-from libraries.result import Status
-from libraries.common import Common
-from libraries.utils import *
-from test_scripts.test_scenario_base import TestScenarioBase
+from libraries.constant import Constant, Colors # noqa
+from libraries.result import Status # noqa
+from libraries.common import Common # noqa
+from libraries.utils import raise_if_exception, perform # noqa
+from test_scripts.test_scenario_base import TestScenarioBase # noqa
 
 
 class TestScenario04(TestScenarioBase):
@@ -24,7 +25,7 @@ class TestScenario04(TestScenarioBase):
     async def execute_test_steps(self):
         print("Test Scenario 04 -> started")
         try:
-            # 1. Create and open pool Ledger  ---------------------------------------------------------
+            # 1. Create and open pool Ledger
             self.steps.add_step("Create and open pool Ledger")
             returned_code = await perform(self.steps, Common.prepare_pool_and_wallet, self.pool_name,
                                           self.wallet_name, self.pool_genesis_txn_file)

@@ -10,11 +10,11 @@ import sys
 import os
 from indy import ledger, signus
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from libraries.constant import Constant, Colors, Roles
-from libraries.result import Status
-from libraries.common import Common
-from libraries import utils
-from test_scripts.test_scenario_base import TestScenarioBase
+from libraries.constant import Constant, Colors, Roles # noqa
+from libraries.result import Status # noqa
+from libraries.common import Common # noqa
+from libraries import utils # noqa
+from test_scripts.test_scenario_base import TestScenarioBase # noqa
 
 
 class TestScenario09(TestScenarioBase):
@@ -175,8 +175,7 @@ class TestScenario09(TestScenarioBase):
             (temp, message) = await self.add_nym(trustanchor1_did, trustanchor2_did, trustanchor2_verkey,
                                                  None, Roles.TRUST_ANCHOR, error_code=304)
             if temp:
-                print(Colors.OKGREEN + "::PASS::Validated that a TrustAnchor cannot create another TrustAnchor!\n"
-                      + Colors.ENDC)
+                print(Colors.OKGREEN + "::PASS::Validated that a TrustAnchor cannot create another TrustAnchor!\n" + Colors.ENDC)
             else:
                 if message is None:
                     message = "TrustAnchor can create another TrustAnchor (should fail)"
@@ -246,8 +245,7 @@ class TestScenario09(TestScenarioBase):
             (temp, message) = await self.add_nym(trustee1_did, trustee2_did, trustee2_verkey,
                                                  None, Roles.TRUSTEE, error_code=304)
             if temp:
-                print(Colors.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create another Trustee!\n"
-                      + Colors.ENDC)
+                print(Colors.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create another Trustee!\n" + Colors.ENDC)
             else:
                 if message is None:
                     message = ""
@@ -258,8 +256,7 @@ class TestScenario09(TestScenarioBase):
             (temp, message) = await self.add_nym(trustee1_did, steward2_did, steward2_verkey,
                                                  None, Roles.STEWARD, error_code=304)
             if temp:
-                print(Colors.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create a Steward!\n"
-                      + Colors.ENDC)
+                print(Colors.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create a Steward!\n" + Colors.ENDC)
             else:
                 if message is None:
                     message = ""
@@ -278,8 +275,7 @@ class TestScenario09(TestScenarioBase):
             (temp, message) = await self.add_nym(steward1_did, trustanchor2_did, trustanchor2_verkey,
                                                  None, Roles.TRUST_ANCHOR, error_code=304)
             if temp:
-                print(Colors.OKGREEN + "::PASS::Validated that removed Steward1 cannot create a TrustAnchor!\n"
-                      + Colors.ENDC)
+                print(Colors.OKGREEN + "::PASS::Validated that removed Steward1 cannot create a TrustAnchor!\n" + Colors.ENDC)
             else:
                 if message is None:
                     message = "Steward1 can create a TrustAnchor (should fail)"
@@ -299,8 +295,7 @@ class TestScenario09(TestScenarioBase):
                                                  None, Roles.TRUST_ANCHOR, error_code=304)
             if temp:
                 print(Colors.OKGREEN + "::PASS::Validated that Steward1 cannot add "
-                                       "back a TrustAnchor removed by TrustTee!\n"
-                      + Colors.ENDC)
+                                       "back a TrustAnchor removed by TrustTee!\n" + Colors.ENDC)
             else:
                 if message is None:
                     message = "Steward1 can add back TrustAnchor removed by Trustee (should fail)"

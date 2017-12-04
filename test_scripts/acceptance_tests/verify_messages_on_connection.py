@@ -11,11 +11,11 @@ import os.path
 import sys
 from indy import pool
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from libraries.constant import Constant, Colors, Roles
-from libraries.result import Status
-from libraries.common import Common
-from libraries.utils import *
-from test_scripts.test_scenario_base import TestScenarioBase
+from libraries.constant import Constant, Colors, Roles # noqa
+from libraries.result import Status # noqa
+from libraries.common import Common # noqa
+from libraries.utils import perform # noqa
+from test_scripts.test_scenario_base import TestScenarioBase # noqa
 
 """ cmds """
 back_up_pool_genesis_file = 'sudo cp ' + Constant.pool_genesis_txn_file + " " + Constant.original_pool_genesis_txn_file

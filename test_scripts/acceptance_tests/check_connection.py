@@ -11,9 +11,9 @@ import sys
 import os
 from indy import pool, signus, wallet
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from libraries.constant import Constant, Colors
-from libraries.utils import *
-from test_scripts.test_scenario_base import TestScenarioBase
+from libraries.constant import Constant, Colors # noqa
+from libraries.utils import perform # noqa
+from test_scripts.test_scenario_base import TestScenarioBase # noqa
 
 
 class TestScenario03(TestScenarioBase):
