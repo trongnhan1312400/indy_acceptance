@@ -9,12 +9,12 @@ import json
 import sys
 import os
 from indy import ledger, signus
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from libraries.constant import Constant, Colors, Roles # noqa
-from libraries.result import Status # noqa
-from libraries.common import Common # noqa
-from libraries import utils # noqa
-from test_scripts.test_scenario_base import TestScenarioBase # noqa
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))  # noqa: E402
+from libraries.constant import Constant, Colors, Roles
+from libraries.result import Status
+from libraries.common import Common
+from libraries import utils
+from test_scripts.test_scenario_base import TestScenarioBase
 
 
 class TestScenario09(TestScenarioBase):

@@ -5,19 +5,18 @@ Created on Nov 8, 2017
 
 Containing test script of test scenario 04: keyrings wallets.
 """
-# noqa: E402, E501
-
+# !/usr/bin/env python3.6
 import json
 import os.path
 import sys
 from indy import signus
 from indy.error import IndyError
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from libraries.constant import Constant, Colors # noqa
-from libraries.result import Status # noqa
-from libraries.common import Common # noqa
-from libraries.utils import raise_if_exception, perform # noqa
-from test_scripts.test_scenario_base import TestScenarioBase # noqa
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))  # noqa: E402
+from libraries.constant import Constant, Colors
+from libraries.result import Status
+from libraries.common import Common
+from libraries.utils import raise_if_exception, perform
+from test_scripts.test_scenario_base import TestScenarioBase
 
 
 class TestScenario04(TestScenarioBase):
