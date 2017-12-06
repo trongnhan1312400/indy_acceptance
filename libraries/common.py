@@ -97,7 +97,7 @@ class Common:
         :return: The pool handle was created.
         """
         import os
-        if os.path.exists(Constant.pool_genesis_txn_file) is not True:
+        if os.path.exists(pool_genesis_txn_file) is not True:
             error_message = Colors.FAIL + "\n{}\n".format(Message.ERR_PATH_DOES_NOT_EXIST.format(Constant.pool_genesis_txn_file)) + Colors.ENDC
             raise ValueError(error_message)
 
