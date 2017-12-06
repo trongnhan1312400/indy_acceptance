@@ -12,7 +12,7 @@ from indy import ledger, signus
 from indy.error import IndyError
 from libraries.constant import Constant, Colors, Roles
 from libraries.common import Common
-from libraries.utils import perform, generate_random_string, raise_if_exception, perform_with_expected_code
+from libraries.utils import perform, generate_random_string, exit_if_exception, perform_with_expected_code
 from test_scripts.test_scenario_base import TestScenarioBase
 
 
@@ -39,7 +39,7 @@ class TestScenario11(TestScenarioBase):
             returned_code = await perform(self.steps, Common.prepare_pool_and_wallet, self.pool_name,
                                           self.wallet_name, self.pool_genesis_txn_file)
 
-            self.pool_handle, self.wallet_handle = raise_if_exception(returned_code)
+            self.pool_handle, self.wallet_handle = exit_if_exception(returned_code)
 
             # 2. Create DIDs ----------------------------------------------------
             self.steps.add_step("Create DIDs")
@@ -156,6 +156,7 @@ class TestScenario11(TestScenarioBase):
             await perform_with_expected_code(self.steps, Common.build_and_send_nym_request, self.pool_handle,
                                              self.wallet_handle, trustanchor1_did, trustanchor2_did,
                                              trustanchor2_verkey, None, Roles.NONE, expected_code=304)
+
         except IndyError as e:
             print(Colors.FAIL + "Stop due to IndyError: " + str(e) + Colors.ENDC)
         except Exception as ex:

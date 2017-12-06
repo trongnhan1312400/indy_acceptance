@@ -28,7 +28,7 @@ class TestScenario09(TestScenarioBase):
             self.steps.add_step("Create and open wallet, pool ledger")
             result = await utils.perform(self.steps, Common.prepare_pool_and_wallet,
                                          self.pool_name, self.wallet_name, Constant.pool_genesis_txn_file)
-            utils.raise_if_exception(result)
+            utils.exit_if_exception(result)
             (self.pool_handle, self.wallet_handle) = result
 
             # 2. Create DIDs.
@@ -36,7 +36,7 @@ class TestScenario09(TestScenarioBase):
 
             result = await utils.perform(self.steps, signus.create_and_store_my_did,
                                          self.wallet_handle, json.dumps({"seed": Constant.seed_default_trustee}))
-            (default_trustee_did, default_trustee_verkey) = result if len(result) == 2 else (None, None)
+            default_trustee_did = result[0] if len(result) == 2 else (None, None)
 
             result = await utils.perform(self.steps, signus.create_and_store_my_did,
                                          self.wallet_handle, json.dumps({}))

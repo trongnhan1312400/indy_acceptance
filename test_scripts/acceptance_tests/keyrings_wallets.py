@@ -13,7 +13,7 @@ from indy.error import IndyError
 from libraries.constant import Constant, Colors
 from libraries.result import Status
 from libraries.common import Common
-from libraries.utils import raise_if_exception, perform
+from libraries.utils import exit_if_exception, perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
 
@@ -27,7 +27,7 @@ class TestScenario04(TestScenarioBase):
             returned_code = await perform(self.steps, Common.prepare_pool_and_wallet, self.pool_name,
                                           self.wallet_name, self.pool_genesis_txn_file)
 
-            self.pool_handle, self.wallet_handle = raise_if_exception(returned_code)
+            self.pool_handle, self.wallet_handle = exit_if_exception(returned_code)
 
             # 2. verify wallet was created in .indy/wallet
             self.steps.add_step("Verify wallet was created in .indy/wallet")
