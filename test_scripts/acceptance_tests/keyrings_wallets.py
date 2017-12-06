@@ -8,10 +8,8 @@ Containing test script of test scenario 04: keyrings wallets.
 # !/usr/bin/env python3.6
 import json
 import os.path
-import sys
 from indy import signus
 from indy.error import IndyError
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))  # noqa: E402
 from libraries.constant import Constant, Colors
 from libraries.result import Status
 from libraries.common import Common

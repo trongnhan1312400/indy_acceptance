@@ -6,10 +6,7 @@ Created on Nov 8, 2017
 Containing test script of test scenario 09: remove and add role.
 """
 import json
-import sys
-import os
 from indy import ledger, signus
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))  # noqa: E402
 from libraries.constant import Constant, Colors, Roles
 from libraries.result import Status
 from libraries.common import Common

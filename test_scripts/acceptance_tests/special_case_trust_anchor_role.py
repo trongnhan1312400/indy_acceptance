@@ -7,12 +7,9 @@ Containing test scripts of test scenario 11: special case for TrustAnchor role.
 """
 
 # !/usr/bin/env python3.6
-import sys
 import json
-import os
 from indy import ledger, signus
 from indy.error import IndyError
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))  # noqa: E402
 from libraries.constant import Constant, Colors, Roles
 from libraries.common import Common
 from libraries.utils import perform, generate_random_string, raise_if_exception, perform_with_expected_code

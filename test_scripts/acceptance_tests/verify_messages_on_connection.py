@@ -7,10 +7,8 @@ Containing test script of test scenario 02: verify messages on connection.
 """
 
 import json
-import os.path
-import sys
+import os
 from indy import pool
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))  # noqa: E402
 from libraries.constant import Constant, Colors
 from libraries.result import Status
 from libraries.utils import perform

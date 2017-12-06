@@ -6,10 +6,8 @@ Created on Nov 22, 2017
 Containing the test base class.
 """
 import time
-import sys
 import os
 import inspect
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))  # noqa: E402
 from libraries.utils import generate_random_string, run_async_method, make_final_result
 from libraries.constant import Constant
 from libraries.common import Common
