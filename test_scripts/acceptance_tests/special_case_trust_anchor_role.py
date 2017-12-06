@@ -45,7 +45,7 @@ class TestScenario11(TestScenarioBase):
             self.steps.add_step("Create DIDs")
             returned_code = await perform(self.steps, signus.create_and_store_my_did,
                                           self.wallet_handle, json.dumps({"seed": Constant.seed_default_trustee}))
-            (default_trustee_did, default_trustee_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+            default_trustee_did = returned_code[0] if len(returned_code) == 2 else (None, None)
 
             returned_code = await perform(self.steps, signus.create_and_store_my_did,
                                           self.wallet_handle, json.dumps({"seed": seed_trustee1}))
