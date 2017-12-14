@@ -14,7 +14,7 @@ from indy import signus
 from libraries import common
 from libraries import constant
 from libraries.result import Status
-from libraries.utils import exit_if_exception, perform
+from libraries.utils import perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
 
@@ -23,10 +23,8 @@ class KeyringsWallets(TestScenarioBase):
     async def execute_test_steps(self):
         # 1. Create and open pool Ledger
         self.steps.add_step("Create and open pool Ledger")
-        returned_code = await perform(self.steps, common.prepare_pool_and_wallet, self.pool_name,
-                                      self.wallet_name, self.pool_genesis_txn_file)
-
-        self.pool_handle, self.wallet_handle = exit_if_exception(returned_code)
+        (self.pool_handle, self.wallet_handle) = await perform(self.steps, common.prepare_pool_and_wallet, self.pool_name,
+                                                               self.wallet_name, self.pool_genesis_txn_file)
 
         # 2. verify wallet was created in .indy/wallet
         self.steps.add_step("Verify wallet was created in .indy/wallet")

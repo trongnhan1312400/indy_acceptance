@@ -36,7 +36,7 @@ class VerifyMessagesOnConnection(TestScenarioBase):
         os.system(restore_pool_genesis_file)
 
     async def execute_test_steps(self):
-        # 1. Create ledger config from genesis txn file  ---------------------------------------------------------
+        # 1. Create ledger config from genesis txn file
         self.steps.add_step("Create Ledger")
         pool_config = json.dumps({"genesis_txn": str(self.pool_genesis_txn_file)})
         self.pool_handle = await perform(self.steps, pool.create_pool_ledger_config, self.pool_name, pool_config)

@@ -14,7 +14,7 @@ from indy import ledger, signus
 from libraries import common
 from libraries import constant
 from libraries.constant import Roles
-from libraries.utils import perform, generate_random_string, exit_if_exception, perform_with_expected_code
+from libraries.utils import perform, generate_random_string, perform_with_expected_code
 from test_scripts.test_scenario_base import TestScenarioBase
 
 
@@ -34,44 +34,34 @@ class SpecialCaseTrustAnchorRole(TestScenarioBase):
         seed_trustanchor3 = generate_random_string(prefix="TrustAnchor3", size=32)
         # 1. Create ledger config from genesis txn file
         self.steps.add_step("Create and open pool Ledger")
-        returned_code = await perform(self.steps, common.prepare_pool_and_wallet, self.pool_name,
-                                      self.wallet_name, self.pool_genesis_txn_file)
-
-        self.pool_handle, self.wallet_handle = exit_if_exception(returned_code)
+        (self.pool_handle, self.wallet_handle) = await perform(self.steps, common.prepare_pool_and_wallet, self.pool_name,
+                                                               self.wallet_name, self.pool_genesis_txn_file)
 
         # 2. Create DIDs ----------------------------------------------------
         self.steps.add_step("Create DIDs")
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
-        default_trustee_did = returned_code[0] if len(returned_code) == 2 else (None, None)
+        (default_trustee_did, _) = await perform(self.steps, signus.create_and_store_my_did,
+                                                 self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_trustee1}))
-        (trustee1_did, trustee1_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (trustee1_did, trustee1_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({"seed": seed_trustee1}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_trustee2}))
-        (trustee2_did, trustee2_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (trustee2_did, trustee2_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({"seed": seed_trustee2}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_steward1}))
-        (steward1_did, steward1_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (steward1_did, steward1_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({"seed": seed_steward1}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_steward2}))
-        (steward2_did, steward2_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (steward2_did, steward2_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({"seed": seed_steward2}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_trustanchor1}))
-        (trustanchor1_did, trustanchor1_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (trustanchor1_did, trustanchor1_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                                self.wallet_handle, json.dumps({"seed": seed_trustanchor1}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_trustanchor2}))
-        (trustanchor2_did, trustanchor2_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (trustanchor2_did, trustanchor2_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                                self.wallet_handle, json.dumps({"seed": seed_trustanchor2}))
 
-        returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                      self.wallet_handle, json.dumps({"seed": seed_trustanchor3}))
-        (trustanchor3_did, trustanchor3_verkey) = returned_code if len(returned_code) == 2 else (None, None)
+        (trustanchor3_did, trustanchor3_verkey) = await perform(self.steps, signus.create_and_store_my_did,
+                                                                self.wallet_handle, json.dumps({"seed": seed_trustanchor3}))
 
         # 3. Using the default Trustee create a TrustAnchor and a new Trustee---------------
         self.steps.add_step("Use default Trustee to create a Trustee")

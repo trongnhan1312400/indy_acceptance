@@ -28,61 +28,47 @@ class RemoveAndAddRole(TestScenarioBase):
         """
         # 1. Create and open wallet, pool ledger.
         self.steps.add_step("Create and open wallet, pool ledger")
-        result = await utils.perform(self.steps, common.prepare_pool_and_wallet,
-                                     self.pool_name, self.wallet_name, constant.pool_genesis_txn_file)
-        utils.exit_if_exception(result)
-        (self.pool_handle, self.wallet_handle) = result
+        (self.pool_handle, self.wallet_handle) = await utils.perform(self.steps, common.prepare_pool_and_wallet,
+                                                                     self.pool_name, self.wallet_name, constant.pool_genesis_txn_file)
 
         # 2. Create DIDs.
         self.steps.add_step("Create DIDs")
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
-        default_trustee_did = result[0] if len(result) == 2 else (None, None)
+        (default_trustee_did, _) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                       self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (trustee1_did, trustee1_verkey) = result if len(result) == 2 else (None, None)
+        (trustee1_did, trustee1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                              self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (trustee2_did, trustee2_verkey) = result if len(result) == 2 else (None, None)
+        (trustee2_did, trustee2_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                              self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (steward1_did, steward1_verkey) = result if len(result) == 2 else (None, None)
+        (steward1_did, steward1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                              self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (steward2_did, steward2_verkey) = result if len(result) == 2 else (None, None)
+        (steward2_did, steward2_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                              self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (steward3_did, steward3_verkey) = result if len(result) == 2 else (None, None)
+        (steward3_did, steward3_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                              self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (trustanchor1_did, trustanchor1_verkey) = result if len(result) == 2 else (None, None)
+        (trustanchor1_did, trustanchor1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                                      self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (trustanchor2_did, trustanchor2_verkey) = result if len(result) == 2 else (None, None)
+        (trustanchor2_did, trustanchor2_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                                      self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (trustanchor3_did, trustanchor3_verkey) = result if len(result) == 2 else (None, None)
+        (trustanchor3_did, trustanchor3_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                                      self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (user1_did, user1_verkey) = result if len(result) == 2 else (None, None)
+        (user1_did, user1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (user3_did, user3_verkey) = result if len(result) == 2 else (None, None)
+        (user3_did, user3_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({}))
 
-        result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                     self.wallet_handle, json.dumps({}))
-        (user4_did, user4_verkey) = result if len(result) == 2 else (None, None)
+        (user4_did, user4_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
+                                                        self.wallet_handle, json.dumps({}))
 
         # ==========================================================================================================
         # Test starts here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
