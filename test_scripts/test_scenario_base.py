@@ -76,6 +76,7 @@ class TestScenarioBase(object):
         utils.print_with_color("\nTest case: {} ----> started\n"
                                .format(self.test_name), Colors.BOLD)
         loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         try:
             run_async_method(self.execute_precondition_steps)
             run_async_method(self.execute_test_steps)
