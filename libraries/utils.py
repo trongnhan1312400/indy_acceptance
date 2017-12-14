@@ -129,3 +129,11 @@ def make_final_result(test_result, steps, begin_time, logger):
     test_result.set_duration(time.time() - begin_time)
     test_result.write_result_to_file()
     logger.save_log(test_result.get_test_status())
+
+
+def print_with_color(message: str, color: str):
+    print(color + message + Colors.ENDC)
+
+
+def print_error(message: str):
+    print_with_color(message, Colors.FAIL)

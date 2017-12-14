@@ -5,16 +5,19 @@ Created on Nov 22, 2017
 
 Containing the test base class.
 """
-import time
-import os
-import inspect
 import asyncio
-from libraries.utils import generate_random_string, run_async_method, make_final_result
-from libraries.constant import Constant
-from libraries.common import Common
+import inspect
+import os
+import time
+
+from libraries import common
+from libraries import constant
+from libraries import utils
+from libraries.constant import Colors
 from libraries.logger import Logger
-from libraries.result import TestResult
+from libraries.result import TestResult, Status
 from libraries.step import Steps
+from libraries.utils import generate_random_string, run_async_method, make_final_result
 
 
 class TestScenarioBase(object):
@@ -27,34 +30,35 @@ class TestScenarioBase(object):
     wallet_name = generate_random_string("test_wallet")
     pool_handle = 0
     wallet_handle = 0
-    pool_genesis_txn_file = Constant.pool_genesis_txn_file
+    pool_genesis_txn_file = constant.pool_genesis_txn_file
     logger = None
     steps = None
     test_result = None
+    test_name = ""
 
     def init_data_test(self):
         """
         Init test data.
         If the test case need some extra test date then just override this method.
         """
-        test_name = os.path.splitext(os.path.basename(inspect.getfile(self.__class__)))[0]
-        self.test_result = TestResult(test_name)
+        self.test_name = os.path.splitext(os.path.basename(inspect.getfile(self.__class__)))[0]
+        self.test_result = TestResult(self.test_name)
         self.steps = Steps()
-        self.logger = Logger(test_name)
+        self.logger = Logger(self.test_name)
 
     async def execute_precondition_steps(self):
         """
          Execute pre-condition of test scenario.
          If the test case need some extra step in pre-condition then just override this method.
         """
-        Common.clean_up_pool_and_wallet_folder(self.pool_name, self.wallet_name)
+        common.clean_up_pool_and_wallet_folder(self.pool_name, self.wallet_name)
 
     async def execute_postcondition_steps(self):
         """
         Execute post-condition of test scenario.
         If the test case need some extra step in post-condition then just override this method.
         """
-        await Common.clean_up_pool_and_wallet(self.pool_name, self.pool_handle, self.wallet_name, self.wallet_handle)
+        await common.clean_up_pool_and_wallet(self.pool_name, self.pool_handle, self.wallet_name, self.wallet_handle)
 
     async def execute_test_steps(self):
         """
@@ -69,9 +73,23 @@ class TestScenarioBase(object):
         """
         begin_time = time.time()
         self.init_data_test()
+        utils.print_with_color("\nTest case: {} ----> started\n"
+                               .format(self.test_name), Colors.BOLD)
         loop = asyncio.new_event_loop()
-        run_async_method(self.execute_precondition_steps)
-        run_async_method(self.execute_test_steps)
-        run_async_method(self.execute_postcondition_steps)
-        loop.close()
-        make_final_result(self.test_result, self.steps.get_list_step(), begin_time, self.logger)
+        try:
+            run_async_method(self.execute_precondition_steps)
+            run_async_method(self.execute_test_steps)
+        except Exception as e:
+            message = constant.EXCEPTION.format(str(e))
+            utils.print_error("\n{}\n".format(str(message)))
+            self.steps.get_last_step().set_status(Status.FAILED)
+            self.steps.get_last_step().set_message(message)
+        finally:
+            try:
+                run_async_method(self.execute_postcondition_steps)
+                loop.close()
+            except Exception as e:
+                utils.print_error("\n{}\n".format(str(type(e))))
+            make_final_result(self.test_result, self.steps.get_list_step(), begin_time, self.logger)
+            utils.print_with_color("Test case: {} ----> finished\n".
+                                   format(self.test_name), Colors.BOLD)
