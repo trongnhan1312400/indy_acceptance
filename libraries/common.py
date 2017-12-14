@@ -10,7 +10,8 @@ import json
 
 from indy import wallet, pool, ledger
 
-from .constant import Colors, Constant, Message
+from .constant import Colors
+from . import constant
 
 
 async def prepare_pool_and_wallet(pool_name, wallet_name, pool_genesis_txn_file):
@@ -49,7 +50,7 @@ def clean_up_pool_and_wallet_folder(pool_name, wallet_name):
     """
     import os
     import shutil
-    work_dir = Constant.work_dir
+    work_dir = constant.work_dir
 
     if os.path.exists(work_dir + "/pool/" + pool_name):
         try:
@@ -93,7 +94,7 @@ async def create_and_open_pool(pool_name, pool_genesis_txn_file):
     """
     import os
     if os.path.exists(pool_genesis_txn_file) is not True:
-        error_message = Colors.FAIL + "\n{}\n".format(Message.ERR_PATH_DOES_NOT_EXIST.format(Constant.pool_genesis_txn_file)) + Colors.ENDC
+        error_message = Colors.FAIL + "\n{}\n".format(constant.ERR_PATH_DOES_NOT_EXIST.format(constant.pool_genesis_txn_file)) + Colors.ENDC
         raise ValueError(error_message)
 
     print(Colors.HEADER + "\nCreate Ledger\n" + Colors.ENDC)

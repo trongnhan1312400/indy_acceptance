@@ -6,7 +6,8 @@ Created on Nov 9, 2017
 Containing all functions used by several test steps on test scenarios.
 """
 from indy.error import IndyError
-from .constant import Colors, Message
+from .constant import Colors
+from . import constant
 from .result import Status
 
 
@@ -57,12 +58,12 @@ async def perform(steps, func, *agrs):
         result = await func(*agrs)
         steps.get_last_step().set_status(Status.PASSED)
     except IndyError as E:
-        print(Colors.FAIL + Message.INDY_ERROR.format(str(E)) + Colors.ENDC)
+        print(Colors.FAIL + constant.INDY_ERROR.format(str(E)) + Colors.ENDC)
         steps.get_last_step().set_message(str(E))
         steps.get_last_step().set_status(Status.FAILED)
         return E
     except Exception as Ex:
-        print(Colors.FAIL + Message.EXCEPTION.format(str(Ex)) + Colors.ENDC)
+        print(Colors.FAIL + constant.EXCEPTION.format(str(Ex)) + Colors.ENDC)
         steps.get_last_step().set_message(str(Ex))
         steps.get_last_step().set_status(Status.FAILED)
         return Ex
@@ -90,11 +91,11 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
             steps.get_last_step().set_status(Status.PASSED)
             return None
         else:
-            print(Colors.FAIL + Message.INDY_ERROR.format(str(E)) + Colors.ENDC)
+            print(Colors.FAIL + constant.INDY_ERROR.format(str(E)) + Colors.ENDC)
             steps.get_last_step().set_message(str(E))
             return E
     except Exception as Ex:
-        print(Colors.FAIL + Message.EXCEPTION.format(str(Ex)) + Colors.ENDC)
+        print(Colors.FAIL + constant.EXCEPTION.format(str(Ex)) + Colors.ENDC)
         return Ex
 
 

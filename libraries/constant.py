@@ -41,3 +41,8 @@ seed_default_trustee = "000000000000000000000000Trustee1"
 genesis_transaction_file_path = "/var/lib/indy/sandbox/"
 pool_genesis_txn_file = genesis_transaction_file_path + "pool_transactions_sandbox_genesis"
 original_pool_genesis_txn_file = genesis_transaction_file_path + "original_pool_transactions_sandbox_genesis"
+
+# Message
+ERR_PATH_DOES_NOT_EXIST = "Cannot find the path specified! \"{}\""
+INDY_ERROR = "IndyError: {}"
+EXCEPTION = "Exception: {}"
