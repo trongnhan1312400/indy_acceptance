@@ -31,17 +31,17 @@ def generate_random_string(prefix="", suffix="", size=20):
     return result
 
 
-def exit_if_exception(code):
+def exit_if_exception(result):
     """
     If "code" is an exception then raise the "code".
     Unless "code" is an exception then return the "code".
     :param code: (optional) code that you want to check.
     :return: "code" if it is not an exception.
     """
-    if (isinstance(code, IndyError) or (isinstance(code, Exception))):
+    if (isinstance(result, Exception)):
         exit(1)
     else:
-        return code
+        return result
 
 
 async def perform(steps, func, *agrs):
@@ -105,9 +105,8 @@ def run_async_method(method):
     :param method: (optional).
     """
     import asyncio
-    loop = asyncio.new_event_loop()
+    loop = asyncio.get_event_loop()
     loop.run_until_complete(method())
-    loop.close()
 
 
 def make_final_result(test_result, steps, begin_time, logger):

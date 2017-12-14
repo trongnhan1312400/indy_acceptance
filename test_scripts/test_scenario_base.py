@@ -8,6 +8,7 @@ Containing the test base class.
 import time
 import os
 import inspect
+import asyncio
 from libraries.utils import generate_random_string, run_async_method, make_final_result
 from libraries.constant import Constant
 from libraries.common import Common
@@ -68,7 +69,9 @@ class TestScenarioBase(object):
         """
         begin_time = time.time()
         self.init_data_test()
+        loop = asyncio.new_event_loop()
         run_async_method(self.execute_precondition_steps)
         run_async_method(self.execute_test_steps)
         run_async_method(self.execute_postcondition_steps)
+        loop.close()
         make_final_result(self.test_result, self.steps.get_list_step(), begin_time, self.logger)
