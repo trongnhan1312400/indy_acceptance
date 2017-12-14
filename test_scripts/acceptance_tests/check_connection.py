@@ -7,8 +7,11 @@ Containing test script of test scenario 03: check connection.
 """
 
 import json
+
 from indy import pool, signus, wallet
-from libraries.constant import Constant, Colors
+
+from libraries import constant
+from libraries.constant import Colors
 from libraries.utils import perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
@@ -18,7 +21,7 @@ class TestScenario03(TestScenarioBase):
 
     async def execute_test_steps(self):
         try:
-            pool_config = json.dumps({"genesis_txn": str(Constant.pool_genesis_txn_file)})
+            pool_config = json.dumps({"genesis_txn": str(constant.pool_genesis_txn_file)})
             # 1. Create pool ledger
             self.steps.add_step("Create pool ledger")
             await perform(self.steps, pool.create_pool_ledger_config, self.pool_name, pool_config)

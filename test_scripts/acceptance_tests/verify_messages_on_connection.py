@@ -9,16 +9,17 @@ Containing test script of test scenario 02: verify messages on connection.
 import json
 import os
 from indy import pool
-from libraries.constant import Constant, Colors
+from libraries.constant import Colors
+from libraries import constant
 from libraries.result import Status
 from libraries.utils import perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
 """ cmds """
-back_up_pool_genesis_file = 'sudo cp ' + Constant.pool_genesis_txn_file + " " + Constant.original_pool_genesis_txn_file
-remove_pool_genesis_file = 'sudo rm ' + Constant.pool_genesis_txn_file
-restore_pool_genesis_file = 'sudo cp ' + Constant.original_pool_genesis_txn_file + " " + Constant.pool_genesis_txn_file
-create_empty_pool_genesis_file = 'sudo touch ' + Constant.pool_genesis_txn_file
+back_up_pool_genesis_file = 'sudo cp ' + constant.pool_genesis_txn_file + " " + constant.original_pool_genesis_txn_file
+remove_pool_genesis_file = 'sudo rm ' + constant.pool_genesis_txn_file
+restore_pool_genesis_file = 'sudo cp ' + constant.original_pool_genesis_txn_file + " " + constant.pool_genesis_txn_file
+create_empty_pool_genesis_file = 'sudo touch ' + constant.pool_genesis_txn_file
 
 
 class TestScenario02(TestScenarioBase):

@@ -6,11 +6,14 @@ Created on Nov 8, 2017
 Containing test script of test scenario 09: remove and add role.
 """
 import json
+
 from indy import ledger, signus
-from libraries.constant import Constant, Colors, Roles
-from libraries.result import Status
+
 from libraries import common
+from libraries import constant
 from libraries import utils
+from libraries.constant import Colors, Roles
+from libraries.result import Status
 from test_scripts.test_scenario_base import TestScenarioBase
 
 
@@ -27,7 +30,7 @@ class TestScenario09(TestScenarioBase):
             # 1. Create and open wallet, pool ledger.
             self.steps.add_step("Create and open wallet, pool ledger")
             result = await utils.perform(self.steps, common.prepare_pool_and_wallet,
-                                         self.pool_name, self.wallet_name, Constant.pool_genesis_txn_file)
+                                         self.pool_name, self.wallet_name, constant.pool_genesis_txn_file)
             utils.exit_if_exception(result)
             (self.pool_handle, self.wallet_handle) = result
 
@@ -35,7 +38,7 @@ class TestScenario09(TestScenarioBase):
             self.steps.add_step("Create DIDs")
 
             result = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                         self.wallet_handle, json.dumps({"seed": Constant.seed_default_trustee}))
+                                         self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
             default_trustee_did = result[0] if len(result) == 2 else (None, None)
 
             result = await utils.perform(self.steps, signus.create_and_store_my_did,

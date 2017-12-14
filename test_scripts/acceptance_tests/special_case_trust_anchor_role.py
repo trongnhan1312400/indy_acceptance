@@ -8,10 +8,13 @@ Containing test scripts of test scenario 11: special case for TrustAnchor role.
 
 # !/usr/bin/env python3.6
 import json
+
 from indy import ledger, signus
 from indy.error import IndyError
-from libraries.constant import Constant, Colors, Roles
+
 from libraries import common
+from libraries import constant
+from libraries.constant import Colors, Roles
 from libraries.utils import perform, generate_random_string, exit_if_exception, perform_with_expected_code
 from test_scripts.test_scenario_base import TestScenarioBase
 
@@ -19,8 +22,6 @@ from test_scripts.test_scenario_base import TestScenarioBase
 # -----------------------------------------------------------------------------------------
 # This will run acceptance tests that will validate the add/remove roles functionality.
 # -----------------------------------------------------------------------------------------
-
-
 class TestScenario11(TestScenarioBase):
 
     async def execute_test_steps(self):
@@ -44,7 +45,7 @@ class TestScenario11(TestScenarioBase):
             # 2. Create DIDs ----------------------------------------------------
             self.steps.add_step("Create DIDs")
             returned_code = await perform(self.steps, signus.create_and_store_my_did,
-                                          self.wallet_handle, json.dumps({"seed": Constant.seed_default_trustee}))
+                                          self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
             default_trustee_did = returned_code[0] if len(returned_code) == 2 else (None, None)
 
             returned_code = await perform(self.steps, signus.create_and_store_my_did,
