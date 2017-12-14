@@ -12,7 +12,7 @@ from indy import signus
 from indy.error import IndyError
 from libraries.constant import Constant, Colors
 from libraries.result import Status
-from libraries.common import Common
+from libraries import common
 from libraries.utils import exit_if_exception, perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
@@ -24,7 +24,7 @@ class TestScenario04(TestScenarioBase):
         try:
             # 1. Create and open pool Ledger
             self.steps.add_step("Create and open pool Ledger")
-            returned_code = await perform(self.steps, Common.prepare_pool_and_wallet, self.pool_name,
+            returned_code = await perform(self.steps, common.prepare_pool_and_wallet, self.pool_name,
                                           self.wallet_name, self.pool_genesis_txn_file)
 
             self.pool_handle, self.wallet_handle = exit_if_exception(returned_code)

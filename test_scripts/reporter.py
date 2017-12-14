@@ -123,7 +123,7 @@ def get_version(program: str) -> str:
     """
     cmd = "dpkg -l | grep '{}'".format(program)
     process = subprocess.Popen([cmd], shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-    (out, err) = process.communicate()
+    (out, _) = process.communicate()
     result = out.decode()
     version = result.split()
 

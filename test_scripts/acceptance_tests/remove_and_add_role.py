@@ -9,7 +9,7 @@ import json
 from indy import ledger, signus
 from libraries.constant import Constant, Colors, Roles
 from libraries.result import Status
-from libraries.common import Common
+from libraries import common
 from libraries import utils
 from test_scripts.test_scenario_base import TestScenarioBase
 
@@ -26,7 +26,7 @@ class TestScenario09(TestScenarioBase):
         try:
             # 1. Create and open wallet, pool ledger.
             self.steps.add_step("Create and open wallet, pool ledger")
-            result = await utils.perform(self.steps, Common.prepare_pool_and_wallet,
+            result = await utils.perform(self.steps, common.prepare_pool_and_wallet,
                                          self.pool_name, self.wallet_name, Constant.pool_genesis_txn_file)
             utils.exit_if_exception(result)
             (self.pool_handle, self.wallet_handle) = result
