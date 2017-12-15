@@ -17,14 +17,16 @@ from libraries.constant import Color
 from libraries.logger import Logger
 from libraries.result import TestResult, Status
 from libraries.step import Steps
-from libraries.utils import generate_random_string, run_async_method, make_final_result
+from libraries.utils import generate_random_string, run_async_method,\
+                            make_final_result
 
 
 class TestScenarioBase():
     """
     Test base....
     All test scenario should inherit from this class.
-    This class controls the work flow and hold some general test data for test scenarios that inherit it.
+    This class controls the work flow and hold some general test data for
+    test scenarios that inherit it.
     """
     pool_name = generate_random_string("test_pool")
     wallet_name = generate_random_string("test_wallet")
@@ -39,9 +41,11 @@ class TestScenarioBase():
     def init_data_test(self):
         """
         Init test data.
-        If the test case need some extra test date then just override this method.
+        If the test case need some extra test date
+        then just override this method.
         """
-        self.test_name = os.path.splitext(os.path.basename(inspect.getfile(self.__class__)))[0]
+        self.test_name = os.path.splitext(
+            os.path.basename(inspect.getfile(self.__class__)))[0]
         self.test_result = TestResult(self.test_name)
         self.steps = Steps()
         self.logger = Logger(self.test_name)
@@ -49,27 +53,33 @@ class TestScenarioBase():
     async def execute_precondition_steps(self):
         """
          Execute pre-condition of test scenario.
-         If the test case need some extra step in pre-condition then just override this method.
+         If the test case need some extra step in pre-condition
+         then just override this method.
         """
-        common.clean_up_pool_and_wallet_folder(self.pool_name, self.wallet_name)
+        common.clean_up_pool_and_wallet_folder(
+            self.pool_name, self.wallet_name)
 
     async def execute_postcondition_steps(self):
         """
         Execute post-condition of test scenario.
-        If the test case need some extra step in post-condition then just override this method.
+        If the test case need some extra step in post-condition
+        then just override this method.
         """
-        await common.clean_up_pool_and_wallet(self.pool_name, self.pool_handle, self.wallet_name, self.wallet_handle)
+        await common.clean_up_pool_and_wallet(self.pool_name, self.pool_handle,
+                                              self.wallet_name,
+                                              self.wallet_handle)
 
     async def execute_test_steps(self):
         """
         The method where contain all main script of a test scenario.
-        All test scenario inherit TestScenarioBase have to override this method.
+        All test scenario inherit TestScenarioBase have to override this method
         """
         pass
 
     def execute_scenario(self):
         """
-        Execute the test scenario and control the work flow of this test scenario.
+        Execute the test scenario and control the work flow of
+        this test scenario.
         """
         begin_time = time.time()
         self.init_data_test()
@@ -91,6 +101,8 @@ class TestScenarioBase():
                 loop.close()
             except Exception as e:
                 utils.print_error("\n{}\n".format(str(type(e))))
-            make_final_result(self.test_result, self.steps.get_list_step(), begin_time, self.logger)
+            make_final_result(
+                self.test_result, self.steps.get_list_step(), begin_time,
+                self.logger)
             utils.print_with_color("Test case: {} ----> finished\n".
                                    format(self.test_name), Color.BOLD)

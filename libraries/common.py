@@ -14,21 +14,22 @@ from .constant import Color
 from . import constant
 
 
-async def prepare_pool_and_wallet(pool_name, wallet_name, pool_genesis_txn_file):
+async def prepare_pool_and_wallet(pool_name, wallet_name, pool_genesis_file):
     """
     Prepare pool and wallet to use in a test case.
 
     :param pool_name: Name of the pool ledger configuration.
     :param wallet_name: Name of the wallet.
-    :param pool_genesis_txn_file: The path of the pool_genesis_transaction file.
+    :param pool_genesis_txn_file: The path of the pool_genesis_transaction file
     :return: The pool handle and the wallet handle were created.
     """
-    pool_handle = await create_and_open_pool(pool_name, pool_genesis_txn_file)
+    pool_handle = await create_and_open_pool(pool_name, pool_genesis_file)
     wallet_handle = await create_and_open_wallet(pool_name, wallet_name)
     return pool_handle, wallet_handle
 
 
-async def clean_up_pool_and_wallet(pool_name, pool_handle, wallet_name, wallet_handle):
+async def clean_up_pool_and_wallet(pool_name, pool_handle, wallet_name,
+                                   wallet_handle):
     """
     Clean up pool and wallet. Using as a post condition of a test case.
 
@@ -79,22 +80,27 @@ async def build_and_send_nym_request(pool_handle, wallet_handle, submitter_did,
     :param role: Role of a user NYM record.
     :raise Exception if the method has error.
     """
-    nym_txn_req = await ledger.build_nym_request(submitter_did, target_did, target_verkey, alias, role)
-    await ledger.sign_and_submit_request(pool_handle, wallet_handle, submitter_did, nym_txn_req)
+    nym_txn_req = await ledger.build_nym_request(submitter_did, target_did,
+                                                 target_verkey, alias, role)
+    await ledger.sign_and_submit_request(pool_handle, wallet_handle,
+                                         submitter_did, nym_txn_req)
 
 
 async def create_and_open_pool(pool_name, pool_genesis_txn_file):
     """
     Creates a new local pool ledger configuration.
-    Then open that pool and return the pool handle that can be used later to connect pool nodes.
-
+    Then open that pool and return the pool handle that can be used later to
+    connect pool nodes.
     :param pool_name: Name of the pool ledger configuration.
-    :param pool_genesis_txn_file: Pool configuration json. if NULL, then default config will be used.
+    :param pool_genesis_txn_file: Pool configuration json.if NULL, then default
+                                  configure will be used.
     :return: The pool handle was created.
     """
     import os
     if os.path.exists(pool_genesis_txn_file) is not True:
-        error_message = Color.FAIL + "\n{}\n".format(constant.ERR_PATH_DOES_NOT_EXIST.format(constant.pool_genesis_txn_file)) + Color.ENDC
+        error_message = Color.FAIL + \
+            "\n{}\n".format(constant.ERR_PATH_DOES_NOT_EXIST.format(
+                constant.pool_genesis_txn_file)) + Color.ENDC
         raise ValueError(error_message)
 
     print(Color.HEADER + "\nCreate Ledger\n" + Color.ENDC)

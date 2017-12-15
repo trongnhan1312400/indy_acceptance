@@ -10,7 +10,8 @@ import json
 from indy import ledger, signus
 
 from libraries import common
-from libraries import constant
+from libraries.constant import pool_genesis_txn_file,\
+    seed_default_trustee
 from libraries import utils
 from libraries.constant import Color, Role
 from libraries.result import Status
@@ -22,53 +23,79 @@ class RemoveAndAddRole(TestScenarioBase):
     async def execute_test_steps(self):
         """
         This function is the main part of test script.
-        All steps that involve to role TGB (9, 10, a half of 24) will be skipped because
-        role TGB is not supported by libindy.
-        There is a bug in this scenario (in step 22, 23 24) so we log a bug here.
+        All steps that involve to role TGB(9, 10, a half of 24) will be skipped
+        because role TGB is not supported by libindy.
+        There is a bug in this scenario(in step 22, 23 24) so we log a bug here
         """
         # 1. Create and open wallet, pool ledger.
         self.steps.add_step("Create and open wallet, pool ledger")
-        (self.pool_handle, self.wallet_handle) = await utils.perform(self.steps, common.prepare_pool_and_wallet,
-                                                                     self.pool_name, self.wallet_name, constant.pool_genesis_txn_file)
+        self.pool_handle, self.wallet_handle = await utils.perform(
+            self.steps,
+            common.prepare_pool_and_wallet,
+            self.pool_name,
+            self.wallet_name,
+            pool_genesis_txn_file)
 
         # 2. Create DIDs.
         self.steps.add_step("Create DIDs")
 
-        (default_trustee_did, _) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                       self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
+        (default_trustee_did, _) = await utils.perform(
+                                    self.steps,
+                                    signus.create_and_store_my_did,
+                                    self.wallet_handle,
+                                    json.dumps({"seed": seed_default_trustee}))
 
-        (trustee1_did, trustee1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                              self.wallet_handle, json.dumps({}))
+        (trustee1_did, trustee1_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (trustee2_did, trustee2_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                              self.wallet_handle, json.dumps({}))
+        (trustee2_did, trustee2_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (steward1_did, steward1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                              self.wallet_handle, json.dumps({}))
+        (steward1_did, steward1_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (steward2_did, steward2_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                              self.wallet_handle, json.dumps({}))
+        (steward2_did, steward2_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (steward3_did, steward3_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                              self.wallet_handle, json.dumps({}))
+        (steward3_did, steward3_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (trustanchor1_did, trustanchor1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                                      self.wallet_handle, json.dumps({}))
+        (trustanchor1_did, trustanchor1_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (trustanchor2_did, trustanchor2_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                                      self.wallet_handle, json.dumps({}))
+        (trustanchor2_did, trustanchor2_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (trustanchor3_did, trustanchor3_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                                      self.wallet_handle, json.dumps({}))
+        (trustanchor3_did, trustanchor3_verkey) = await utils.perform(
+                                            self.steps,
+                                            signus.create_and_store_my_did,
+                                            self.wallet_handle, json.dumps({}))
 
-        (user1_did, user1_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                        self.wallet_handle, json.dumps({}))
+        (user1_did, user1_verkey) = await utils.perform(
+                                    self.steps, signus.create_and_store_my_did,
+                                    self.wallet_handle, json.dumps({}))
 
-        (user3_did, user3_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                        self.wallet_handle, json.dumps({}))
+        (user3_did, user3_verkey) = await utils.perform(
+                                    self.steps, signus.create_and_store_my_did,
+                                    self.wallet_handle, json.dumps({}))
 
-        (user4_did, user4_verkey) = await utils.perform(self.steps, signus.create_and_store_my_did,
-                                                        self.wallet_handle, json.dumps({}))
+        (user4_did, user4_verkey) = await utils.perform(
+                                    self.steps, signus.create_and_store_my_did,
+                                    self.wallet_handle, json.dumps({}))
 
         # ==========================================================================================================
         # Test starts here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -76,7 +103,8 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 3. Using default Trustee to create Trustee1.
         self.steps.add_step("Using default Trustee to create Trustee1")
-        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey, None, Role.TRUSTEE)
+        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey,
+                           None, Role.TRUSTEE)
 
         # 4. Verify GET NYM - Trustee1.
         self.steps.add_step("Verify GET NYM - Trustee1")
@@ -84,7 +112,8 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 5. Using Trustee1 to create Steward1.
         self.steps.add_step("Using Trustee1 to create Steward1")
-        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None, Role.STEWARD)
+        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None,
+                           Role.STEWARD)
 
         # 6. Verify GET NYM - Steward1.
         self.steps.add_step("Verify GET NYM - Steward1")
@@ -110,7 +139,8 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 11. Using Steward1 to create TrustAnchor1.
         self.steps.add_step("Using Steward1 to create TrustAnchor1")
-        await self.add_nym(steward1_did, trustanchor1_did, trustanchor1_verkey, None, Role.TRUST_ANCHOR)
+        await self.add_nym(steward1_did, trustanchor1_did, trustanchor1_verkey,
+                           None, Role.TRUST_ANCHOR)
 
         # 12. Verify GET NYM - TrustAnchor1.
         self.steps.add_step("Verify GET NYM - TrustAnchor1")
@@ -125,11 +155,15 @@ class RemoveAndAddRole(TestScenarioBase):
         await self.get_nym(steward1_did, user4_did)
 
         # 15. Verify that a Steward cannot create another Steward.
-        self.steps.add_step("Verify that Steward cannot create another Steward")
-        (temp, message) = await self.add_nym(steward1_did, steward2_did, steward2_verkey, None,
+        self.steps.add_step(
+            "Verify that Steward cannot create another Steward")
+        (temp, message) = await self.add_nym(steward1_did, steward2_did,
+                                             steward2_verkey, None,
                                              Role.STEWARD, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that a Steward cannot create a Steward!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that a Steward cannot create a Steward!\n",
+                Color.OKGREEN)
         else:
             if message is None:
                 message = "Steward can create another Steward (should fail)"
@@ -137,11 +171,15 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 16. Verify that a Steward cannot create a Trustee.
         self.steps.add_step("Verify that a Steward cannot create a Trustee")
-        (temp, message) = await self.add_nym(steward1_did, trustee1_did, trustee1_verkey,
-                                             None, Role.TRUSTEE, error_code=304)
+        (temp, message) = await self.add_nym(steward1_did, trustee1_did,
+                                             trustee1_verkey,
+                                             None, Role.TRUSTEE,
+                                             error_code=304)
 
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that a Steward cannot create a Trustee!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that a Steward cannot create a Trustee!\n",
+                Color.OKGREEN)
         else:
             if message is None:
                 message = "Steward can create a Trustee (should fail)"
@@ -149,149 +187,195 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 17. Using TrustAnchor1 to add a NYM.
         self.steps.add_step("Using TrustAnchor1 to add a NYM")
-        await self.add_nym(trustanchor1_did, user1_did, user1_verkey, None, None)
+        await self.add_nym(trustanchor1_did, user1_did, user1_verkey,
+                           None, None)
 
         # 18. Verify GET NYM - User1.
         self.steps.add_step("Verify GET NYM - User1")
         await self.get_nym(trustanchor1_did, user1_did)
 
         # 19. Verify that TrustAnchor cannot create another TrustAnchor.
-        self.steps.add_step("Verify that TrustAnchor cannot create another TrustAnchor")
-        (temp, message) = await self.add_nym(trustanchor1_did, trustanchor2_did, trustanchor2_verkey,
-                                             None, Role.TRUST_ANCHOR, error_code=304)
+        self.steps.add_step(
+            "Verify that TrustAnchor cannot create another TrustAnchor")
+        (temp, message) = await self.add_nym(trustanchor1_did,
+                                             trustanchor2_did,
+                                             trustanchor2_verkey,
+                                             None, Role.TRUST_ANCHOR,
+                                             error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that a TrustAnchor cannot create another TrustAnchor!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that a TrustAnchor cannot create"
+                "another TrustAnchor!\n", Color.OKGREEN)
         else:
             if message is None:
-                message = "TrustAnchor can create another TrustAnchor (should fail)"
+                message = "TrustAnchor can create another"
+                "TrustAnchor (should fail)"
             self.steps.get_last_step().set_message(message)
 
         # 20. Using default Trustee to remove new roles.
         bug_is_430 = "Bug: https://jira.hyperledger.org/browse/IS-430"
         self.steps.add_step("Using default Trustee to remove new roles")
         message_20 = ""
-        (temp, message) = await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey,
-                                             None, Role.NONE)
+        (temp, message) = await self.add_nym(default_trustee_did, trustee1_did,
+                                             trustee1_verkey, None, Role.NONE)
         result = temp
         if not temp:
             message_20 += "\nCannot remove Trustee1's role - " + message
         else:
-            (temp, message) = await self.get_nym(default_trustee_did, trustee1_did)
+            (temp, message) = await self.get_nym(default_trustee_did,
+                                                 trustee1_did)
             if not temp:
-                message_20 += "\nCannot check self.get_nym for Trustee1 - " + message
+                message_20 += "\nCannot check self.get_nym for Trustee1 - "\
+                              + message
             else:
-                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Role.NONE):
+                if not RemoveAndAddRole.check_role_in_retrieved_nym(message,
+                                                                    Role.NONE):
                     temp = False
                     message_20 += "\nCannot remove Trustee1's role"
 
         result = result and temp
-        (temp, message) = await self.add_nym(default_trustee_did, steward1_did, steward1_verkey,
-                                             None, Role.NONE)
+        (temp, message) = await self.add_nym(default_trustee_did, steward1_did,
+                                             steward1_verkey, None, Role.NONE)
         result = result and temp
         if not temp:
             message_20 += "\nCannot remove Steward1's role - " + message
         else:
-            (temp, message) = await self.get_nym(default_trustee_did, steward1_did)
+            (temp, message) = await self.get_nym(default_trustee_did,
+                                                 steward1_did)
             if not temp:
-                message_20 += "\nCannot check self.get_nym for Steward1 - " + message
+                message_20 += "\nCannot check self.get_nym for Steward1 - "\
+                              + message
             else:
-                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Role.NONE):
+                if not RemoveAndAddRole.check_role_in_retrieved_nym(message,
+                                                                    Role.NONE):
                     temp = False
                     message_20 += "\nCannot remove Steward1's role"
 
         result = result and temp
 
-        (temp, message) = await self.add_nym(default_trustee_did, trustanchor1_did,
-                                             trustanchor1_verkey, None, Role.NONE)
+        (temp, message) = await self.add_nym(default_trustee_did,
+                                             trustanchor1_did,
+                                             trustanchor1_verkey,
+                                             None, Role.NONE)
         result = result and temp
 
         if not temp:
             message_20 += "\nCannot remove Trust_Anchor1's role - " + message
         else:
-            (temp, message) = await self.get_nym(default_trustee_did, trustanchor1_did)
+            (temp, message) = await self.get_nym(default_trustee_did,
+                                                 trustanchor1_did)
             if not temp:
-                message_20 += "\nCannot check self.get_nym for Trust_Anchor1 - " + message
+                message_20 += "\nCannot check self.get_nym for"\
+                              "Trust_Anchor1 - " + message
             else:
-                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Role.NONE):
+                if not RemoveAndAddRole.check_role_in_retrieved_nym(message,
+                                                                    Role.NONE):
                     temp = False
                     message_20 += "\nCannot remove Trust_Anchor1's role"
 
         result = result and temp
 
         if not result:
-            self.steps.get_last_step().set_message("{}\n{}".format(message_20[1:], bug_is_430))
+            self.steps.get_last_step().set_message(
+                "{}\n{}".format(message_20[1:], bug_is_430))
             self.steps.get_last_step().set_status(Status.FAILED)
         else:
             self.steps.get_last_step().set_status(Status.PASSED)
 
         # 21. Verify that removed Trustee1 cannot create Trustee or Steward.
-        self.steps.add_step("Verify that removed Trustee1 cannot create Trustee or Steward")
+        self.steps.add_step(
+            "Verify that removed Trustee1 cannot create Trustee or Steward")
         message_21 = ""
-        (temp, message) = await self.add_nym(trustee1_did, trustee2_did, trustee2_verkey,
-                                             None, Role.TRUSTEE, error_code=304)
+        (temp, message) = await self.add_nym(trustee1_did, trustee2_did,
+                                             trustee2_verkey, None,
+                                             Role.TRUSTEE, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create another Trustee!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that removed Trustee1 cannot create another"
+                " Trustee!\n", Color.OKGREEN)
         else:
             if message is None:
                 message = ""
-            message_21 += "\nRemoved Trustee can create Trustee (should fail) " + message
+            message_21 += "\nRemoved Trustee can create Trustee "\
+                          "(should fail) " + message
 
         result = temp
 
-        (temp, message) = await self.add_nym(trustee1_did, steward2_did, steward2_verkey,
-                                             None, Role.STEWARD, error_code=304)
+        (temp, message) = await self.add_nym(trustee1_did, steward2_did,
+                                             steward2_verkey, None,
+                                             Role.STEWARD, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create a Steward!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that removed Trustee1 cannot create"
+                " a Steward!\n", Color.OKGREEN)
         else:
             if message is None:
                 message = ""
-            message_21 += "\nRemoved Trustee can create Steward(should fail) " + message
+            message_21 += "\nRemoved Trustee can create Steward"\
+                          "(should fail) " + message
 
         result = result and temp
 
         if not result:
-            self.steps.get_last_step().set_message("{}\n{}".format(message_21[1:], bug_is_430))
+            self.steps.get_last_step().set_message(
+                "{}\n{}".format(message_21[1:], bug_is_430))
             self.steps.get_last_step().set_status(Status.FAILED)
         else:
             self.steps.get_last_step().set_status(Status.PASSED)
 
         # 22. Verify that removed Steward1 cannot create TrustAnchor.
-        self.steps.add_step("Verify that removed Steward1 cannot create TrustAnchor")
-        (temp, message) = await self.add_nym(steward1_did, trustanchor2_did, trustanchor2_verkey,
-                                             None, Role.TRUST_ANCHOR, error_code=304)
+        self.steps.add_step(
+            "Verify that removed Steward1 cannot create TrustAnchor")
+        (temp, message) = await self.add_nym(steward1_did, trustanchor2_did,
+                                             trustanchor2_verkey, None,
+                                             Role.TRUST_ANCHOR, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that removed Steward1 cannot create a TrustAnchor!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that removed Steward1 cannot create "
+                "a TrustAnchor!\n", Color.OKGREEN)
         else:
             if message is None:
                 message = "Steward1 can create a TrustAnchor (should fail)"
-            self.steps.get_last_step().set_message("{}\n{}".format(message, bug_is_430))
+            self.steps.get_last_step().set_message("{}\n{}".format(message,
+                                                                   bug_is_430))
 
         # 23. Using default Trustee to create Trustee1.
         self.steps.add_step("Using default Trustee to create Trustee1")
-        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey, None, Role.TRUSTEE)
+        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey,
+                           None, Role.TRUSTEE)
 
         # 24. Using Trustee1 to add Steward1.
         self.steps.add_step("Using Trustee1 to add Steward1")
-        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None, Role.STEWARD)
+        await self.add_nym(trustee1_did, steward1_did, steward1_verkey,
+                           None, Role.STEWARD)
 
-        # 25. Verify that Steward1 cannot add back a TrustAnchor removed by TrustTee.
-        self.steps.add_step("Verify that Steward1 cannot add back a TrustAnchor removed by TrustTee")
-        (temp, message) = await self.add_nym(steward1_did, trustanchor1_did, trustanchor1_verkey,
-                                             None, Role.TRUST_ANCHOR, error_code=304)
+        # 25. Verify that Steward1 cannot add back a TrustAnchor removed by
+        # TrustTee.
+        self.steps.add_step(
+            "Verify that Steward1 cannot add back a TrustAnchor"
+            " removed by TrustTee")
+        (temp, message) = await self.add_nym(steward1_did, trustanchor1_did,
+                                             trustanchor1_verkey, None,
+                                             Role.TRUST_ANCHOR, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that Steward1 cannot add "
-                                   "back a TrustAnchor removed by TrustTee!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that Steward1 cannot add "
+                "back a TrustAnchor removed by TrustTee!\n", Color.OKGREEN)
         else:
             if message is None:
-                message = "Steward1 can add back TrustAnchor removed by Trustee (should fail)"
+                message = ("Steward1 can add back TrustAnchor removed by"
+                           "Trustee (should fail)")
             self.steps.get_last_step().set_message(message)
 
         # 26. Verify that Steward cannot remove a Trustee.
         self.steps.add_step("Verify that Steward cannot remove a Trustee")
-        (temp, message) = await self.add_nym(steward1_did, trustee1_did, trustee1_verkey,
-                                             None, Role.NONE, error_code=304)
+        (temp, message) = await self.add_nym(steward1_did, trustee1_did,
+                                             trustee1_verkey, None,
+                                             Role.NONE, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that Steward cannot remove a Trustee!\n" + Color.ENDC)
+            utils.print_with_color(
+                "::PASS::Validated that Steward cannot remove a Trustee!\n",
+                Color.OKGREEN)
         else:
             if message is None:
                 message = "Steward can create a Trustee (should fail)"
@@ -300,15 +384,21 @@ class RemoveAndAddRole(TestScenarioBase):
         # 27. Verify that Trustee can add new Steward.
         self.steps.add_step("Verify that Trustee can add new Steward")
         message_27 = ""
-        (temp, message) = await self.add_nym(trustee1_did, steward2_did, steward2_verkey, None, Role.STEWARD)
+        (temp, message) = await self.add_nym(trustee1_did, steward2_did,
+                                             steward2_verkey, None,
+                                             Role.STEWARD)
         result = temp
         if not temp:
-            message_27 += "\nTrustee cannot add Steward1 (should pass) - " + message
+            message_27 += "\nTrustee cannot add Steward1 (should pass) - " + \
+                message
 
-        (temp, message) = await self.add_nym(trustee1_did, steward3_did, steward3_verkey, None, Role.STEWARD)
+        (temp, message) = await self.add_nym(trustee1_did, steward3_did,
+                                             steward3_verkey, None,
+                                             Role.STEWARD)
         result = result and temp
         if not temp:
-            message_27 += "\nTrustee cannot add Steward2 (should pass) - " + message
+            message_27 += "\nTrustee cannot add Steward2 (should pass) - " + \
+                message
 
         if not result:
             self.steps.get_last_step().set_status(Status.FAILED)
@@ -317,11 +407,15 @@ class RemoveAndAddRole(TestScenarioBase):
             self.steps.get_last_step().set_status(Status.PASSED)
 
         # 28. Verify that Steward cannot remove another Steward.
-        self.steps.add_step("Verify that Steward cannot remove another Steward")
-        (temp, message) = await self.add_nym(steward1_did, steward2_did, steward2_verkey, None,
+        self.steps.add_step(
+            "Verify that Steward cannot remove another Steward")
+        (temp, message) = await self.add_nym(steward1_did, steward2_did,
+                                             steward2_verkey, None,
                                              Role.NONE, error_code=304)
         if temp:
-            print(Color.OKGREEN + "::PASS::Validated that Steward cannot remove another Steward!\n" + Color.ENDC)
+            utils.print_with_color(
+             "::PASS::Validated that Steward cannot remove another Steward!\n",
+             Color.OKGREEN)
         else:
             if message is None:
                 message = "Steward can remove another Steward (should fail)"
@@ -329,9 +423,11 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 29. Verify Steward can add a TrustAnchor.
         self.steps.add_step("Verify Steward can add a TrustAnchor")
-        await self.add_nym(steward2_did, trustanchor3_did, trustanchor3_verkey, None, Role.TRUST_ANCHOR)
+        await self.add_nym(steward2_did, trustanchor3_did, trustanchor3_verkey,
+                           None, Role.TRUST_ANCHOR)
 
-    async def add_nym(self, submitter_did, target_did, ver_key, alias, role, error_code=None):
+    async def add_nym(self, submitter_did, target_did, ver_key, alias, role,
+                      error_code=None):
         """
         Build a send NYM request and submit it.
 
@@ -341,23 +437,30 @@ class RemoveAndAddRole(TestScenarioBase):
         :param alias: (optional)
         :param role: (optional) role
         :param error_code: the error_code that you expect
-        :return: (True, message) if send NYM successfully (message is result of send NYM).
-                 (False, message) if send NYM failed (message is result of send NYM)
+        :return: (True, message) if send NYM successfully
+                                 (message is result of send NYM).
+                 (False, message) if send NYM failed
+                                 (message is result of send NYM)
         """
-        nym = await utils.perform(self.steps, ledger.build_nym_request, submitter_did, target_did, ver_key, alias, role)
+        nym = await utils.perform(self.steps, ledger.build_nym_request,
+                                  submitter_did, target_did, ver_key,
+                                  alias, role)
         if isinstance(nym, IndexError or Exception):
             return False, None
 
         if not error_code:
-            result = await utils.perform(self.steps, ledger.sign_and_submit_request, self.pool_handle,
-                                         self.wallet_handle, submitter_did, nym)
+            result = await utils.perform(
+                        self.steps, ledger.sign_and_submit_request,
+                        self.pool_handle, self.wallet_handle,
+                        submitter_did, nym)
             if isinstance(result, IndexError or Exception):
                 return False, result
             return True, None
         else:
-            result = await utils.perform_with_expected_code(self.steps, ledger.sign_and_submit_request,
-                                                            self.pool_handle, self.wallet_handle, submitter_did, nym,
-                                                            expected_code=error_code)
+            result = await utils.perform_with_expected_code(
+                        self.steps, ledger.sign_and_submit_request,
+                        self.pool_handle, self.wallet_handle, submitter_did,
+                        nym, expected_code=error_code)
             if self.steps.get_last_step().get_status() == Status.FAILED:
                 return False, result
             return True, None
@@ -368,14 +471,18 @@ class RemoveAndAddRole(TestScenarioBase):
 
         :param submitter_did: (optional) DID of request submitter.
         :param target_did: (optional) DID of request target.
-        :return: (True, message) if GET_NYM is sent successfully (message is result of GET_NYM).
-                 (False, message) if GET_NYM cannot be sent (message is result of GET_NYM)
+        :return: (True, message) if GET_NYM is sent successfully
+                                 (message is result of GET_NYM).
+                 (False, message) if GET_NYM cannot be sent
+                                  (message is result of GET_NYM)
         """
 
-        nym = await utils.perform(self.steps, ledger.build_get_nym_request, submitter_did, target_did)
+        nym = await utils.perform(self.steps, ledger.build_get_nym_request,
+                                  submitter_did, target_did)
         if isinstance(nym, IndexError or Exception):
             return False, None
-        result = await  utils.perform(self.steps, ledger.submit_request, self.pool_handle, nym)
+        result = await  utils.perform(self.steps, ledger.submit_request,
+                                      self.pool_handle, nym)
         if isinstance(result, IndexError or Exception):
             return False, result
         return True, result

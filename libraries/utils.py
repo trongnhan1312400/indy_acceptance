@@ -25,9 +25,11 @@ def generate_random_string(prefix="", suffix="", size=20):
     left_size = size - len(prefix) - len(suffix)
     random_str = ""
     if left_size > 0:
-        random_str = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(left_size))
+        random_str = ''.join(random.choice(
+            string.ascii_uppercase + string.digits) for _ in range(left_size))
     else:
-        print("Warning: Length of prefix and suffix more than %s chars" % str(size))
+        print("Warning: Length of prefix and suffix more than %s chars"
+              % str(size))
     result = str(prefix) + random_str + str(suffix)
     return result
 
@@ -78,14 +80,16 @@ async def perform(steps, func, *args, ignore_exception=False):
 
 async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
     """
-    Execute the "func" with expectation that the "func" raise an IndyError that IndyError.error_code = "expected_code".
+    Execute the "func" with expectation that the "func" raise an IndyError
+    that IndyError.error_code = "expected_code".
 
     :param steps: (optional) list of test steps.
     :param func: (optional) executed function.
     :param agrs: arguments of "func".
     :param expected_code: the error code that you expect in IndyError.
     :return: exception if the "func" raise it without "expected_code".
-             'None' if the "func" run without any exception of the exception contain "expected_code".
+             'None' if the "func" run without any exception of
+             the exception contain "expected_code".
     """
     try:
         await func(*agrs)
@@ -129,7 +133,8 @@ def make_final_result(test_result, steps, begin_time, logger):
     for step in steps:
         test_result.add_step(step)
         if step.get_status() == Status.FAILED:
-            print('%s: ' % str(step.get_id()) + Color.FAIL + 'failed\nMessage: ' + step.get_message() + Color.ENDC)
+            print('%s: ' % str(step.get_id()) + Color.FAIL +
+                  'failed\nMessage: ' + step.get_message() + Color.ENDC)
             test_result.set_test_failed()
 
     test_result.set_duration(time.time() - begin_time)

@@ -23,8 +23,12 @@ class KeyringsWallets(TestScenarioBase):
     async def execute_test_steps(self):
         # 1. Create and open pool Ledger
         self.steps.add_step("Create and open pool Ledger")
-        (self.pool_handle, self.wallet_handle) = await perform(self.steps, common.prepare_pool_and_wallet, self.pool_name,
-                                                               self.wallet_name, self.pool_genesis_txn_file)
+        self.pool_handle, self.wallet_handle = await perform(
+                                               self.steps,
+                                               common.prepare_pool_and_wallet,
+                                               self.pool_name,
+                                               self.wallet_name,
+                                               self.pool_genesis_txn_file)
 
         # 2. verify wallet was created in .indy/wallet
         self.steps.add_step("Verify wallet was created in .indy/wallet")
@@ -36,7 +40,8 @@ class KeyringsWallets(TestScenarioBase):
         # 3. create DID to check the new wallet work well.
         self.steps.add_step("Create DID to check the new wallet work well")
         await perform(self.steps, signus.create_and_store_my_did,
-                      self.wallet_handle, json.dumps({"seed": constant.seed_default_trustee}))
+                      self.wallet_handle,
+                      json.dumps({"seed": constant.seed_default_trustee}))
 
 
 if __name__ == '__main__':

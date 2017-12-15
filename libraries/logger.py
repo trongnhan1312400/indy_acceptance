@@ -17,7 +17,8 @@ from .constant import Color
 
 
 class Logger:
-    __log_dir = os.path.join(os.path.dirname(__file__), "..") + "/test_output/log_files/"
+    __log_dir = os.path.join(os.path.dirname(
+        __file__), "..") + "/test_output/log_files/"
 
     __KEEP_LOG_FLAG = "-l"
     __LOG_LVL = logging.DEBUG
