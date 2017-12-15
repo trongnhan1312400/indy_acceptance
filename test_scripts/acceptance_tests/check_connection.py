@@ -24,7 +24,7 @@ class CheckConnection(TestScenarioBase):
         # 1. Create pool ledger
         self.steps.add_step("Create pool ledger")
         await perform(self.steps, pool.create_pool_ledger_config,
-                      self.pool_name, pool_config)
+                      self.pool_name, pool_config, ignore_exception=False)
 
         # 2. Create wallet
         self.steps.add_step("Create wallet")

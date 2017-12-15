@@ -28,7 +28,8 @@ class KeyringsWallets(TestScenarioBase):
                                                common.prepare_pool_and_wallet,
                                                self.pool_name,
                                                self.wallet_name,
-                                               self.pool_genesis_txn_file)
+                                               self.pool_genesis_txn_file,
+                                               ignore_exception=False)
 
         # 2. verify wallet was created in .indy/wallet
         self.steps.add_step("Verify wallet was created in .indy/wallet")

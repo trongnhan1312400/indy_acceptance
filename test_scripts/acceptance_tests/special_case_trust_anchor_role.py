@@ -40,7 +40,8 @@ class SpecialCaseTrustAnchorRole(TestScenarioBase):
                                                 common.prepare_pool_and_wallet,
                                                 self.pool_name,
                                                 self.wallet_name,
-                                                self.pool_genesis_txn_file)
+                                                self.pool_genesis_txn_file,
+                                                ignore_exception=False)
 
         # 2. Create DIDs ----------------------------------------------------
         self.steps.add_step("Create DIDs")

@@ -34,7 +34,8 @@ class RemoveAndAddRole(TestScenarioBase):
             common.prepare_pool_and_wallet,
             self.pool_name,
             self.wallet_name,
-            pool_genesis_txn_file)
+            pool_genesis_txn_file,
+            ignore_exception=False)
 
         # 2. Create DIDs.
         self.steps.add_step("Create DIDs")

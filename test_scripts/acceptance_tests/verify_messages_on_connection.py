@@ -45,7 +45,8 @@ class VerifyMessagesOnConnection(TestScenarioBase):
             {"genesis_txn": str(self.pool_genesis_txn_file)})
         self.pool_handle = await perform(self.steps,
                                          pool.create_pool_ledger_config,
-                                         self.pool_name, pool_config)
+                                         self.pool_name, pool_config,
+                                         ignore_exception=False)
 
         # 2. Open pool ledger -------------------------------------------------
         self.steps.add_step("Open pool ledger")
