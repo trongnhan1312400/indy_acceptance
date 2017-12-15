@@ -47,7 +47,7 @@ def exit_if_exception(result):
         return result
 
 
-async def perform(steps, func, *args, ignore_exception=False):
+async def perform(steps, func, *args, ignore_exception=True):
     """
     Execute an function and set status, message for the last test step depend
     on the result of the function.
