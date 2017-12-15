@@ -12,7 +12,6 @@ import os
 import time
 
 from .constant import Color
-from .utils import print_with_color
 from enum import Enum
 
 TEST_CASE = "testcase"
@@ -100,8 +99,8 @@ class TestResult:
         with open(self.__json_file_path, "w+") as outfile:
             json.dump(self.__test_result, outfile,
                       ensure_ascii=False, indent=2)
-            print_with_color("\nJson file has been written at: {}\n".format(
-                self.__json_file_path, Color.OKBLUE))
+            print(Color.OKBLUE + "\nJson file has been written at: {}\n"
+                  .format(self.__json_file_path) + Color.ENDC)
 
     def set_test_failed(self):
         """
