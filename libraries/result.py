@@ -11,7 +11,7 @@ import json
 import os
 import time
 
-from .constant import Colors
+from .constant import Color
 from enum import Enum
 
 TEST_CASE = "testcase"
@@ -93,7 +93,7 @@ class TestResult:
         self.__test_result[RUN] = self.__run
         with open(self.__json_file_path, "w+") as outfile:
             json.dump(self.__test_result, outfile, ensure_ascii=False, indent=2)
-            print(Colors.OKBLUE + "\nJson file has been written at: {}\n".format(self.__json_file_path) + Colors.ENDC)
+            print(Color.OKBLUE + "\nJson file has been written at: {}\n".format(self.__json_file_path) + Color.ENDC)
 
     def set_test_failed(self):
         """

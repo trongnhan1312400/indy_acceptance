@@ -7,12 +7,13 @@ Created on Nov 9, 2017
 Containing all constants that are necessary to execute test scenario.
 """
 import os
+from enum import Enum
 
 
-class Colors:
+class Color(str, Enum):
     """
     Class to set the colors for text.
-    Syntax:  print(Colors.OKGREEN +"TEXT HERE" +Colors.ENDC)
+    Syntax:  print(Color.OKGREEN +"TEXT HERE" +Color.ENDC)
     """
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -24,7 +25,7 @@ class Colors:
     UNDERLINE = '\033[4m'
 
 
-class Roles:
+class Role(str, Enum):
     """
     Class to define roles.
     """

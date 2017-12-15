@@ -13,7 +13,7 @@ from indy import ledger, signus
 
 from libraries import common
 from libraries import constant
-from libraries.constant import Roles
+from libraries.constant import Role
 from libraries.utils import perform, generate_random_string, perform_with_expected_code
 from test_scripts.test_scenario_base import TestScenarioBase
 
@@ -66,7 +66,7 @@ class SpecialCaseTrustAnchorRole(TestScenarioBase):
         # 3. Using the default Trustee create a TrustAnchor and a new Trustee---------------
         self.steps.add_step("Use default Trustee to create a Trustee")
         await perform(self.steps, common.build_and_send_nym_request, self.pool_handle, self.wallet_handle,
-                      default_trustee_did, trustee1_did, trustee1_verkey, None, Roles.TRUSTEE)
+                      default_trustee_did, trustee1_did, trustee1_verkey, None, Role.TRUSTEE)
 
         # 4. Verify GET_NYM for trustee1-----------------------------------------------------------------------------------
         self.steps.add_step("Verify get nym for Trustee")
@@ -76,7 +76,7 @@ class SpecialCaseTrustAnchorRole(TestScenarioBase):
         # 5. Create TrustAnchor1
         self.steps.add_step("Create TrustAnchor1")
         await perform(self.steps, common.build_and_send_nym_request, self.pool_handle, self.wallet_handle,
-                      default_trustee_did, trustanchor1_did, trustanchor1_verkey, None, Roles.TRUST_ANCHOR)
+                      default_trustee_did, trustanchor1_did, trustanchor1_verkey, None, Role.TRUST_ANCHOR)
 
         # 6. Verify GET_NYM for TrustAnchor1-------------------------------------------------------------------------------
         self.steps.add_step("Verify GET_NYM for TrustAnchor1")
@@ -87,7 +87,7 @@ class SpecialCaseTrustAnchorRole(TestScenarioBase):
         self.steps.add_step("Use TrustAnchor1 to create a Trustee")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustanchor1_did, trustee2_did, trustee2_verkey,
-                                         None, Roles.TRUSTEE, expected_code=304)
+                                         None, Role.TRUSTEE, expected_code=304)
 
         # 8. Verify GET_NYM for new Trustee--------------------------------------------------------------------------------
         self.steps.add_step("Verify get NYM for new trustee")
@@ -98,52 +98,52 @@ class SpecialCaseTrustAnchorRole(TestScenarioBase):
         self.steps.add_step("Verify a trustee cannot create a new Steward")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustee2_did, steward1_did, steward1_verkey,
-                                         None, Roles.STEWARD, expected_code=304)
+                                         None, Role.STEWARD, expected_code=304)
 
         # 10. Using the TrustAnchor blacklist a Trustee (TrustAnchor should not be able to blacklist Trustee)
         self.steps.add_step("Use TrustAnchor to blacklist a Trustee")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustanchor1_did, trustee1_did, trustee1_verkey,
-                                         None, Roles.NONE, expected_code=304)
+                                         None, Role.NONE, expected_code=304)
 
         # 11. Verify Trustee was not blacklisted by creating another Trustee------------------------------------------------
         self.steps.add_step("Verify Trustee was not blacklisted by creating another Trustee")
         await perform(self.steps, common.build_and_send_nym_request, self.pool_handle, self.wallet_handle,
-                      trustee1_did, trustee2_did, trustee2_verkey, None, Roles.TRUSTEE)
+                      trustee1_did, trustee2_did, trustee2_verkey, None, Role.TRUSTEE)
 
         # 12. Using the TrustAnchor1 to create a Steward2 -----------------------------------------------------------------
         self.steps.add_step("TrustAnchor1 cannot create a Steward2")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustanchor1_did, steward2_did, steward2_verkey,
-                                         None, Roles.STEWARD, expected_code=304)
+                                         None, Role.STEWARD, expected_code=304)
 
         # 13. Using the Trustee1 create Steward1 -----------------------------------------------------------------
         self.steps.add_step("Using the Trustee1 create Steward1")
         await perform(self.steps, common.build_and_send_nym_request, self.pool_handle, self.wallet_handle,
-                      trustee1_did, steward1_did, steward1_verkey, None, Roles.STEWARD)
+                      trustee1_did, steward1_did, steward1_verkey, None, Role.STEWARD)
 
         # 14. Now run the test to blacklist Steward1
         self.steps.add_step("Run the test to blacklist Steward1")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustanchor1_did, steward1_did,
-                                         steward1_verkey, None, Roles.NONE, expected_code=304)
+                                         steward1_verkey, None, Role.NONE, expected_code=304)
 
         # 15. Verify that a TrustAnchor1 cannot create another TrustAnchor3 -------------------------------------
         self.steps.add_step("Verify TrustAnchor1 cannot create a TrustAnchor3")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustanchor1_did, trustanchor3_did,
-                                         trustanchor3_verkey, None, Roles.TRUST_ANCHOR, expected_code=304)
+                                         trustanchor3_verkey, None, Role.TRUST_ANCHOR, expected_code=304)
 
         # 16. Using the Trustee1 create TrustAnchor2 -----------------------------------------------------------------
         self.steps.add_step("Using the Trustee1 create Steward1")
         await perform(self.steps, common.build_and_send_nym_request, self.pool_handle, self.wallet_handle,
-                      trustee1_did, trustanchor2_did, trustanchor2_verkey, None, Roles.TRUST_ANCHOR)
+                      trustee1_did, trustanchor2_did, trustanchor2_verkey, None, Role.TRUST_ANCHOR)
 
         # 17. Verify that a TrustAnchor1 cannot blacklist another TrustAnchor2 -------------------------------------
         self.steps.add_step("Verify TrustAnchor1 cannot blacklist TrustAnchor2")
         await perform_with_expected_code(self.steps, common.build_and_send_nym_request, self.pool_handle,
                                          self.wallet_handle, trustanchor1_did, trustanchor2_did,
-                                         trustanchor2_verkey, None, Roles.NONE, expected_code=304)
+                                         trustanchor2_verkey, None, Role.NONE, expected_code=304)
 
 
 if __name__ == '__main__':

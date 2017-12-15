@@ -13,7 +13,7 @@ import errno
 import logging
 import io
 from .result import Status
-from .constant import Colors
+from .constant import Color
 
 
 class Logger:
@@ -61,8 +61,8 @@ class Logger:
 
         if os.path.exists(self.__log_file_path) \
            and os.path.isfile(self.__log_file_path):
-            print(Colors.OKBLUE + "Log file has been kept at: {}\n".
-                  format(self.__log_file_path) + Colors.ENDC)
+            print(Color.OKBLUE + "Log file has been kept at: {}\n".
+                  format(self.__log_file_path) + Color.ENDC)
 
     @staticmethod
     def __redirect_stdout_stderr(file):

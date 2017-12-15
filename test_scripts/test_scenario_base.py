@@ -13,14 +13,14 @@ import time
 from libraries import common
 from libraries import constant
 from libraries import utils
-from libraries.constant import Colors
+from libraries.constant import Color
 from libraries.logger import Logger
 from libraries.result import TestResult, Status
 from libraries.step import Steps
 from libraries.utils import generate_random_string, run_async_method, make_final_result
 
 
-class TestScenarioBase(object):
+class TestScenarioBase():
     """
     Test base....
     All test scenario should inherit from this class.
@@ -74,7 +74,7 @@ class TestScenarioBase(object):
         begin_time = time.time()
         self.init_data_test()
         utils.print_with_color("\nTest case: {} ----> started\n"
-                               .format(self.test_name), Colors.BOLD)
+                               .format(self.test_name), Color.BOLD)
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         try:
@@ -93,4 +93,4 @@ class TestScenarioBase(object):
                 utils.print_error("\n{}\n".format(str(type(e))))
             make_final_result(self.test_result, self.steps.get_list_step(), begin_time, self.logger)
             utils.print_with_color("Test case: {} ----> finished\n".
-                                   format(self.test_name), Colors.BOLD)
+                                   format(self.test_name), Color.BOLD)

@@ -12,7 +12,7 @@ from indy import ledger, signus
 from libraries import common
 from libraries import constant
 from libraries import utils
-from libraries.constant import Colors, Roles
+from libraries.constant import Color, Role
 from libraries.result import Status
 from test_scripts.test_scenario_base import TestScenarioBase
 
@@ -76,7 +76,7 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 3. Using default Trustee to create Trustee1.
         self.steps.add_step("Using default Trustee to create Trustee1")
-        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey, None, Roles.TRUSTEE)
+        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey, None, Role.TRUSTEE)
 
         # 4. Verify GET NYM - Trustee1.
         self.steps.add_step("Verify GET NYM - Trustee1")
@@ -84,7 +84,7 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 5. Using Trustee1 to create Steward1.
         self.steps.add_step("Using Trustee1 to create Steward1")
-        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None, Roles.STEWARD)
+        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None, Role.STEWARD)
 
         # 6. Verify GET NYM - Steward1.
         self.steps.add_step("Verify GET NYM - Steward1")
@@ -110,7 +110,7 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 11. Using Steward1 to create TrustAnchor1.
         self.steps.add_step("Using Steward1 to create TrustAnchor1")
-        await self.add_nym(steward1_did, trustanchor1_did, trustanchor1_verkey, None, Roles.TRUST_ANCHOR)
+        await self.add_nym(steward1_did, trustanchor1_did, trustanchor1_verkey, None, Role.TRUST_ANCHOR)
 
         # 12. Verify GET NYM - TrustAnchor1.
         self.steps.add_step("Verify GET NYM - TrustAnchor1")
@@ -127,9 +127,9 @@ class RemoveAndAddRole(TestScenarioBase):
         # 15. Verify that a Steward cannot create another Steward.
         self.steps.add_step("Verify that Steward cannot create another Steward")
         (temp, message) = await self.add_nym(steward1_did, steward2_did, steward2_verkey, None,
-                                             Roles.STEWARD, error_code=304)
+                                             Role.STEWARD, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that a Steward cannot create a Steward!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that a Steward cannot create a Steward!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "Steward can create another Steward (should fail)"
@@ -138,10 +138,10 @@ class RemoveAndAddRole(TestScenarioBase):
         # 16. Verify that a Steward cannot create a Trustee.
         self.steps.add_step("Verify that a Steward cannot create a Trustee")
         (temp, message) = await self.add_nym(steward1_did, trustee1_did, trustee1_verkey,
-                                             None, Roles.TRUSTEE, error_code=304)
+                                             None, Role.TRUSTEE, error_code=304)
 
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that a Steward cannot create a Trustee!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that a Steward cannot create a Trustee!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "Steward can create a Trustee (should fail)"
@@ -158,9 +158,9 @@ class RemoveAndAddRole(TestScenarioBase):
         # 19. Verify that TrustAnchor cannot create another TrustAnchor.
         self.steps.add_step("Verify that TrustAnchor cannot create another TrustAnchor")
         (temp, message) = await self.add_nym(trustanchor1_did, trustanchor2_did, trustanchor2_verkey,
-                                             None, Roles.TRUST_ANCHOR, error_code=304)
+                                             None, Role.TRUST_ANCHOR, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that a TrustAnchor cannot create another TrustAnchor!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that a TrustAnchor cannot create another TrustAnchor!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "TrustAnchor can create another TrustAnchor (should fail)"
@@ -171,7 +171,7 @@ class RemoveAndAddRole(TestScenarioBase):
         self.steps.add_step("Using default Trustee to remove new roles")
         message_20 = ""
         (temp, message) = await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey,
-                                             None, Roles.NONE)
+                                             None, Role.NONE)
         result = temp
         if not temp:
             message_20 += "\nCannot remove Trustee1's role - " + message
@@ -180,13 +180,13 @@ class RemoveAndAddRole(TestScenarioBase):
             if not temp:
                 message_20 += "\nCannot check self.get_nym for Trustee1 - " + message
             else:
-                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Roles.NONE):
+                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Role.NONE):
                     temp = False
                     message_20 += "\nCannot remove Trustee1's role"
 
         result = result and temp
         (temp, message) = await self.add_nym(default_trustee_did, steward1_did, steward1_verkey,
-                                             None, Roles.NONE)
+                                             None, Role.NONE)
         result = result and temp
         if not temp:
             message_20 += "\nCannot remove Steward1's role - " + message
@@ -195,14 +195,14 @@ class RemoveAndAddRole(TestScenarioBase):
             if not temp:
                 message_20 += "\nCannot check self.get_nym for Steward1 - " + message
             else:
-                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Roles.NONE):
+                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Role.NONE):
                     temp = False
                     message_20 += "\nCannot remove Steward1's role"
 
         result = result and temp
 
         (temp, message) = await self.add_nym(default_trustee_did, trustanchor1_did,
-                                             trustanchor1_verkey, None, Roles.NONE)
+                                             trustanchor1_verkey, None, Role.NONE)
         result = result and temp
 
         if not temp:
@@ -212,7 +212,7 @@ class RemoveAndAddRole(TestScenarioBase):
             if not temp:
                 message_20 += "\nCannot check self.get_nym for Trust_Anchor1 - " + message
             else:
-                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Roles.NONE):
+                if not RemoveAndAddRole.check_role_in_retrieved_nym(message, Role.NONE):
                     temp = False
                     message_20 += "\nCannot remove Trust_Anchor1's role"
 
@@ -228,9 +228,9 @@ class RemoveAndAddRole(TestScenarioBase):
         self.steps.add_step("Verify that removed Trustee1 cannot create Trustee or Steward")
         message_21 = ""
         (temp, message) = await self.add_nym(trustee1_did, trustee2_did, trustee2_verkey,
-                                             None, Roles.TRUSTEE, error_code=304)
+                                             None, Role.TRUSTEE, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create another Trustee!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create another Trustee!\n" + Color.ENDC)
         else:
             if message is None:
                 message = ""
@@ -239,9 +239,9 @@ class RemoveAndAddRole(TestScenarioBase):
         result = temp
 
         (temp, message) = await self.add_nym(trustee1_did, steward2_did, steward2_verkey,
-                                             None, Roles.STEWARD, error_code=304)
+                                             None, Role.STEWARD, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create a Steward!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that removed Trustee1 cannot create a Steward!\n" + Color.ENDC)
         else:
             if message is None:
                 message = ""
@@ -258,9 +258,9 @@ class RemoveAndAddRole(TestScenarioBase):
         # 22. Verify that removed Steward1 cannot create TrustAnchor.
         self.steps.add_step("Verify that removed Steward1 cannot create TrustAnchor")
         (temp, message) = await self.add_nym(steward1_did, trustanchor2_did, trustanchor2_verkey,
-                                             None, Roles.TRUST_ANCHOR, error_code=304)
+                                             None, Role.TRUST_ANCHOR, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that removed Steward1 cannot create a TrustAnchor!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that removed Steward1 cannot create a TrustAnchor!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "Steward1 can create a TrustAnchor (should fail)"
@@ -268,19 +268,19 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 23. Using default Trustee to create Trustee1.
         self.steps.add_step("Using default Trustee to create Trustee1")
-        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey, None, Roles.TRUSTEE)
+        await self.add_nym(default_trustee_did, trustee1_did, trustee1_verkey, None, Role.TRUSTEE)
 
         # 24. Using Trustee1 to add Steward1.
         self.steps.add_step("Using Trustee1 to add Steward1")
-        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None, Roles.STEWARD)
+        await self.add_nym(trustee1_did, steward1_did, steward1_verkey, None, Role.STEWARD)
 
         # 25. Verify that Steward1 cannot add back a TrustAnchor removed by TrustTee.
         self.steps.add_step("Verify that Steward1 cannot add back a TrustAnchor removed by TrustTee")
         (temp, message) = await self.add_nym(steward1_did, trustanchor1_did, trustanchor1_verkey,
-                                             None, Roles.TRUST_ANCHOR, error_code=304)
+                                             None, Role.TRUST_ANCHOR, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that Steward1 cannot add "
-                                   "back a TrustAnchor removed by TrustTee!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that Steward1 cannot add "
+                                   "back a TrustAnchor removed by TrustTee!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "Steward1 can add back TrustAnchor removed by Trustee (should fail)"
@@ -289,9 +289,9 @@ class RemoveAndAddRole(TestScenarioBase):
         # 26. Verify that Steward cannot remove a Trustee.
         self.steps.add_step("Verify that Steward cannot remove a Trustee")
         (temp, message) = await self.add_nym(steward1_did, trustee1_did, trustee1_verkey,
-                                             None, Roles.NONE, error_code=304)
+                                             None, Role.NONE, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that Steward cannot remove a Trustee!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that Steward cannot remove a Trustee!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "Steward can create a Trustee (should fail)"
@@ -300,12 +300,12 @@ class RemoveAndAddRole(TestScenarioBase):
         # 27. Verify that Trustee can add new Steward.
         self.steps.add_step("Verify that Trustee can add new Steward")
         message_27 = ""
-        (temp, message) = await self.add_nym(trustee1_did, steward2_did, steward2_verkey, None, Roles.STEWARD)
+        (temp, message) = await self.add_nym(trustee1_did, steward2_did, steward2_verkey, None, Role.STEWARD)
         result = temp
         if not temp:
             message_27 += "\nTrustee cannot add Steward1 (should pass) - " + message
 
-        (temp, message) = await self.add_nym(trustee1_did, steward3_did, steward3_verkey, None, Roles.STEWARD)
+        (temp, message) = await self.add_nym(trustee1_did, steward3_did, steward3_verkey, None, Role.STEWARD)
         result = result and temp
         if not temp:
             message_27 += "\nTrustee cannot add Steward2 (should pass) - " + message
@@ -319,9 +319,9 @@ class RemoveAndAddRole(TestScenarioBase):
         # 28. Verify that Steward cannot remove another Steward.
         self.steps.add_step("Verify that Steward cannot remove another Steward")
         (temp, message) = await self.add_nym(steward1_did, steward2_did, steward2_verkey, None,
-                                             Roles.NONE, error_code=304)
+                                             Role.NONE, error_code=304)
         if temp:
-            print(Colors.OKGREEN + "::PASS::Validated that Steward cannot remove another Steward!\n" + Colors.ENDC)
+            print(Color.OKGREEN + "::PASS::Validated that Steward cannot remove another Steward!\n" + Color.ENDC)
         else:
             if message is None:
                 message = "Steward can remove another Steward (should fail)"
@@ -329,7 +329,7 @@ class RemoveAndAddRole(TestScenarioBase):
 
         # 29. Verify Steward can add a TrustAnchor.
         self.steps.add_step("Verify Steward can add a TrustAnchor")
-        await self.add_nym(steward2_did, trustanchor3_did, trustanchor3_verkey, None, Roles.TRUST_ANCHOR)
+        await self.add_nym(steward2_did, trustanchor3_did, trustanchor3_verkey, None, Role.TRUST_ANCHOR)
 
     async def add_nym(self, submitter_did, target_did, ver_key, alias, role, error_code=None):
         """

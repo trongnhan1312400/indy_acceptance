@@ -34,9 +34,9 @@ class Steps:
         Add a new step to list step.
         :param name: variable hold the step name. Using to report.
         """
-        from libraries.constant import Colors
+        from libraries.constant import Color
         step_id = len(self.__steps)
-        print(Colors.HEADER + "\n{0}. {1}\n".format(step_id + 1, name) + Colors.ENDC)
+        print(Color.HEADER + "\n{0}. {1}\n".format(step_id + 1, name) + Color.ENDC)
         new_step = Step(step_id + 1, name)
         self.__steps.append(new_step)
 

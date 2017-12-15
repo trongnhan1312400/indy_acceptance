@@ -6,7 +6,7 @@ Created on Nov 9, 2017
 Containing all functions used by several test steps on test scenarios.
 """
 from indy.error import IndyError
-from .constant import Colors
+from .constant import Color
 from . import constant
 from .result import Status
 
@@ -60,12 +60,12 @@ async def perform(steps, func, *args, ignore_exception=False):
         result = await func(*args)
         steps.get_last_step().set_status(Status.PASSED)
     except IndyError as E:
-        print(Colors.FAIL + constant.INDY_ERROR.format(str(E)) + Colors.ENDC)
+        print(Color.FAIL + constant.INDY_ERROR.format(str(E)) + Color.ENDC)
         steps.get_last_step().set_message(str(E))
         steps.get_last_step().set_status(Status.FAILED)
         result = E
     except Exception as Ex:
-        print(Colors.FAIL + constant.EXCEPTION.format(str(Ex)) + Colors.ENDC)
+        print(Color.FAIL + constant.EXCEPTION.format(str(Ex)) + Color.ENDC)
         steps.get_last_step().set_message(str(Ex))
         steps.get_last_step().set_status(Status.FAILED)
         result = Ex
@@ -97,11 +97,11 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
             steps.get_last_step().set_status(Status.PASSED)
             return None
         else:
-            print(Colors.FAIL + constant.INDY_ERROR.format(str(E)) + Colors.ENDC)
+            print(Color.FAIL + constant.INDY_ERROR.format(str(E)) + Color.ENDC)
             steps.get_last_step().set_message(str(E))
             return E
     except Exception as Ex:
-        print(Colors.FAIL + constant.EXCEPTION.format(str(Ex)) + Colors.ENDC)
+        print(Color.FAIL + constant.EXCEPTION.format(str(Ex)) + Color.ENDC)
         return Ex
 
 
@@ -129,7 +129,7 @@ def make_final_result(test_result, steps, begin_time, logger):
     for step in steps:
         test_result.add_step(step)
         if step.get_status() == Status.FAILED:
-            print('%s: ' % str(step.get_id()) + Colors.FAIL + 'failed\nMessage: ' + step.get_message() + Colors.ENDC)
+            print('%s: ' % str(step.get_id()) + Color.FAIL + 'failed\nMessage: ' + step.get_message() + Color.ENDC)
             test_result.set_test_failed()
 
     test_result.set_duration(time.time() - begin_time)
@@ -138,8 +138,8 @@ def make_final_result(test_result, steps, begin_time, logger):
 
 
 def print_with_color(message: str, color: str):
-    print(color + message + Colors.ENDC)
+    print(color + message + Color.ENDC)
 
 
 def print_error(message: str):
-    print_with_color(message, Colors.FAIL)
+    print_with_color(message, Color.FAIL)

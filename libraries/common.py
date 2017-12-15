@@ -10,7 +10,7 @@ import json
 
 from indy import wallet, pool, ledger
 
-from .constant import Colors
+from .constant import Color
 from . import constant
 
 
@@ -56,13 +56,13 @@ def clean_up_pool_and_wallet_folder(pool_name, wallet_name):
         try:
             shutil.rmtree(work_dir + "/pool/" + pool_name)
         except IOError as E:
-            print(Colors.FAIL + str(E) + Colors.ENDC)
+            print(Color.FAIL + str(E) + Color.ENDC)
 
     if os.path.exists(work_dir + "/wallet/" + wallet_name):
         try:
             shutil.rmtree(work_dir + "/wallet/" + wallet_name)
         except IOError as E:
-            print(Colors.FAIL + str(E) + Colors.ENDC)
+            print(Color.FAIL + str(E) + Color.ENDC)
 
 
 async def build_and_send_nym_request(pool_handle, wallet_handle, submitter_did,
@@ -94,14 +94,14 @@ async def create_and_open_pool(pool_name, pool_genesis_txn_file):
     """
     import os
     if os.path.exists(pool_genesis_txn_file) is not True:
-        error_message = Colors.FAIL + "\n{}\n".format(constant.ERR_PATH_DOES_NOT_EXIST.format(constant.pool_genesis_txn_file)) + Colors.ENDC
+        error_message = Color.FAIL + "\n{}\n".format(constant.ERR_PATH_DOES_NOT_EXIST.format(constant.pool_genesis_txn_file)) + Color.ENDC
         raise ValueError(error_message)
 
-    print(Colors.HEADER + "\nCreate Ledger\n" + Colors.ENDC)
+    print(Color.HEADER + "\nCreate Ledger\n" + Color.ENDC)
     pool_config = json.dumps({"genesis_txn": str(pool_genesis_txn_file)})
     await pool.create_pool_ledger_config(pool_name, pool_config)
 
-    print(Colors.HEADER + "\nOpen pool ledger\n" + Colors.ENDC)
+    print(Color.HEADER + "\nOpen pool ledger\n" + Color.ENDC)
     pool_handle = await pool.open_pool_ledger(pool_name, None)
     return pool_handle
 
@@ -116,10 +116,10 @@ async def create_and_open_wallet(pool_name, wallet_name):
     :param wallet_name: Name of the wallet.
     :return: The wallet handle was created.
     """
-    print(Colors.HEADER + "\nCreate wallet\n" + Colors.ENDC)
+    print(Color.HEADER + "\nCreate wallet\n" + Color.ENDC)
     await wallet.create_wallet(pool_name, wallet_name, None, None, None)
 
-    print(Colors.HEADER + "\nGet wallet handle\n" + Colors.ENDC)
+    print(Color.HEADER + "\nGet wallet handle\n" + Color.ENDC)
     wallet_handle = await wallet.open_wallet(wallet_name, None, None)
     return wallet_handle
 
@@ -132,10 +132,10 @@ async def close_pool_and_wallet(pool_handle, wallet_handle):
     :param wallet_handle: wallet handle returned by indy_open_wallet.
     :raise Exception if the method has error.
     """
-    print(Colors.HEADER + "\nClose pool\n" + Colors.ENDC)
+    print(Color.HEADER + "\nClose pool\n" + Color.ENDC)
     await pool.close_pool_ledger(pool_handle)
 
-    print(Colors.HEADER + "\nClose wallet\n" + Colors.ENDC)
+    print(Color.HEADER + "\nClose wallet\n" + Color.ENDC)
     await wallet.close_wallet(wallet_handle)
 
 
@@ -147,8 +147,8 @@ async def delete_pool_and_wallet(pool_name, wallet_name):
     :param wallet_name: Name of the wallet to delete.
     :raise Exception if the method has error.
     """
-    print(Colors.HEADER + "\nDelete pool\n" + Colors.ENDC)
+    print(Color.HEADER + "\nDelete pool\n" + Color.ENDC)
     await pool.delete_pool_ledger_config(pool_name)
 
-    print(Colors.HEADER + "\nDelete wallet\n" + Colors.ENDC)
+    print(Color.HEADER + "\nDelete wallet\n" + Color.ENDC)
     await wallet.delete_wallet(wallet_name, None)
