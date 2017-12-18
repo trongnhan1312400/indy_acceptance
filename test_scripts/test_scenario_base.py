@@ -93,8 +93,7 @@ class TestScenarioBase():
         except Exception as e:
             message = constant.EXCEPTION.format(str(e))
             utils.print_error("\n{}\n".format(str(message)))
-            self.steps.get_last_step().set_status(Status.FAILED)
-            self.steps.get_last_step().set_message(message)
+            self.steps.get_last_step().set_status(Status.FAILED, message)
         finally:
             try:
                 run_async_method(self.execute_postcondition_steps)

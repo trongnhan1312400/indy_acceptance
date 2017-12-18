@@ -63,12 +63,10 @@ async def perform(steps, func, *args, ignore_exception=True):
         steps.get_last_step().set_status(Status.PASSED)
     except IndyError as E:
         print(Color.FAIL + constant.INDY_ERROR.format(str(E)) + Color.ENDC)
-#         steps.get_last_step().set_message(str(E))
         steps.get_last_step().set_status(Status.FAILED, str(E))
         result = E
     except Exception as Ex:
         print(Color.FAIL + constant.EXCEPTION.format(str(Ex)) + Color.ENDC)
-#         steps.get_last_step().set_message(str(Ex))
         steps.get_last_step().set_status(Status.FAILED, str(Ex))
         result = Ex
 
@@ -102,7 +100,6 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
             return None
         else:
             print(Color.FAIL + constant.INDY_ERROR.format(str(E)) + Color.ENDC)
-#             steps.get_last_step().set_message(str(E))
             steps.get_last_step().set_status(Status.FAILED, str(E))
             return E
     except Exception as Ex:
