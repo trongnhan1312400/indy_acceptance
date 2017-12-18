@@ -11,12 +11,12 @@ import json
 
 from indy import ledger, signus
 
-from utilities import common
-from utilities.constant import seed_default_trustee
-from utilities.constant import Role
-from utilities.utils import perform, generate_random_string,\
+from indy_acceptance.utilities import common
+from indy_acceptance.utilities.constant import seed_default_trustee
+from indy_acceptance.utilities.constant import Role
+from indy_acceptance.utilities.utils import perform, generate_random_string,\
                             perform_with_expected_code
-from test_scripts.test_scenario_base import TestScenarioBase
+from indy_acceptance.test_scripts.test_scenario_base import TestScenarioBase
 
 
 class SpecialCaseTrustAnchorRole(TestScenarioBase):

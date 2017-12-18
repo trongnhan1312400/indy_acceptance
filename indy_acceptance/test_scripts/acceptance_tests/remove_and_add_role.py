@@ -9,13 +9,13 @@ import json
 
 from indy import ledger, signus
 
-from utilities import common
-from utilities.constant import pool_genesis_txn_file, \
-    seed_default_trustee
-from utilities import utils
-from utilities.constant import Color, Role
-from utilities.result import Status
-from test_scripts.test_scenario_base import TestScenarioBase
+from indy_acceptance.utilities import common
+from indy_acceptance.utilities.constant import pool_genesis_txn_file, \
+                                                seed_default_trustee
+from indy_acceptance.utilities import utils
+from indy_acceptance.utilities.constant import Color, Role
+from indy_acceptance.utilities.result import Status
+from indy_acceptance.test_scripts.test_scenario_base import TestScenarioBase
 
 
 class RemoveAndAddRole(TestScenarioBase):

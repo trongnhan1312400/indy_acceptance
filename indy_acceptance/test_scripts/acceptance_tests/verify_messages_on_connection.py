@@ -11,11 +11,11 @@ import os
 
 from indy import pool
 
-from utilities.constant import original_pool_genesis_txn_file,\
+from indy_acceptance.utilities.constant import original_pool_genesis_txn_file,\
                                pool_genesis_txn_file
-from utilities.result import Status
-from utilities.utils import perform
-from test_scripts.test_scenario_base import TestScenarioBase
+from indy_acceptance.utilities.result import Status
+from indy_acceptance.utilities.utils import perform
+from indy_acceptance.test_scripts.test_scenario_base import TestScenarioBase
 
 
 """ cmds """

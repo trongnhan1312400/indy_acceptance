@@ -10,15 +10,15 @@ import inspect
 import os
 import time
 
-from utilities import common
-from utilities import constant
-from utilities import utils
-from utilities.constant import Color
-from utilities.logger import Logger
-from utilities.result import TestResult, Status
-from utilities.step import Steps
-from utilities.utils import generate_random_string, run_async_method,\
-                            make_final_result
+from indy_acceptance.utilities import common
+from indy_acceptance.utilities import constant
+from indy_acceptance.utilities import utils
+from indy_acceptance.utilities.constant import Color
+from indy_acceptance.utilities.logger import Logger
+from indy_acceptance.utilities.result import TestResult, Status
+from indy_acceptance.utilities.step import Steps
+from indy_acceptance.utilities.utils import generate_random_string,\
+                                    run_async_method, make_final_result
 
 
 class TestScenarioBase():

@@ -11,11 +11,11 @@ import os.path
 
 from indy import signus
 
-from utilities import common
-from utilities import constant
-from utilities.result import Status
-from utilities.utils import perform
-from test_scripts.test_scenario_base import TestScenarioBase
+from indy_acceptance.utilities import common
+from indy_acceptance.utilities import constant
+from indy_acceptance.utilities.result import Status
+from indy_acceptance.utilities.utils import perform
+from indy_acceptance.test_scripts.test_scenario_base import TestScenarioBase
 
 
 class KeyringsWallets(TestScenarioBase):
