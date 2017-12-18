@@ -91,7 +91,7 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
     """
     try:
         await func(*agrs)
-        message = "Can execute without exception."
+        message = "Expected exception %s but not." % str(expected_code)
         steps.get_last_step().set_status(Status.FAILED, message)
         return None
     except IndyError as E:

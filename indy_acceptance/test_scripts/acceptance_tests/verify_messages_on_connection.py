@@ -50,7 +50,8 @@ class VerifyMessagesOnConnection(TestScenarioBase):
 
         # 2. Open pool ledger -------------------------------------------------
         self.steps.add_step("Open pool ledger")
-        message_2 = "Failed due to the Bug IS-332"
+        bug_is332 = "Bug: https://jira.hyperledger.org/browse/IS-332"
+        message_2 = "Failed due to the Bug IS-332" + "\n" + bug_is332
         self.steps.get_last_step().set_status(Status.FAILED, message_2)
 
         # 3. verifying the message --------------------------------------------
