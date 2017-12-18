@@ -37,6 +37,9 @@ class KeyringsWallets(TestScenarioBase):
         result = os.path.exists(wallet_path)
         if result:
             self.steps.get_last_step().set_status(Status.PASSED)
+        else:
+            message_2 = "Cannot find %s directory." % wallet_path
+            self.steps.get_last_step().set_status(Status.PASSED, message_2)
 
         # 3. create DID to check the new wallet work well.
         self.steps.add_step("Create DID to check the new wallet work well")

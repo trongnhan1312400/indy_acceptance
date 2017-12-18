@@ -50,13 +50,13 @@ class VerifyMessagesOnConnection(TestScenarioBase):
 
         # 2. Open pool ledger -------------------------------------------------
         self.steps.add_step("Open pool ledger")
-        self.steps.get_last_step().set_message("Failed due to the Bug IS-332")
-        self.steps.get_last_step().set_status(Status.FAILED)
+        message_2 = "Failed due to the Bug IS-332"
+        self.steps.get_last_step().set_status(Status.FAILED, message_2)
 
         # 3. verifying the message --------------------------------------------
         self.steps.add_step("verifying the message")
-        self.steps.get_last_step().set_message("TODO after fix IS-332")
-        self.steps.get_last_step().set_status(Status.FAILED)
+        message_3 = "TODO after fix IS-332"
+        self.steps.get_last_step().set_status(Status.FAILED, message_3)
 
 
 if __name__ == '__main__':
