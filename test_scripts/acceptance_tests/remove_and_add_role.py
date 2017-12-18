@@ -248,7 +248,7 @@ class RemoveAndAddRole(TestScenarioBase):
         error_msg = "\nRemoved Trustee can create Trustee  (should fail) "
         successful_msg = "::PASS::Validated that removed Trustee1 " \
                          "cannot create another Trustee!\n"
-        self.check(temp, successful_msg, error_msg + message)
+        self.check(temp, successful_msg, error_msg[1:] + message)
         result = temp
 
         (temp, message) = await self.add_nym(trustee1_did, steward2_did,
@@ -259,7 +259,9 @@ class RemoveAndAddRole(TestScenarioBase):
                          "cannot create a Steward!\n"
         error_msg = "\nRemoved Trustee can create Steward (should fail) "
 
-        self.check(temp, successful_msg, error_msg + message)
+        self.check(temp, successful_msg, "{}{}\n{}".format(error_msg[1:],
+                                                           message,
+                                                           bug_is_430))
         result = result and temp
 
         if not result:
@@ -359,17 +361,18 @@ class RemoveAndAddRole(TestScenarioBase):
                            None, Role.TRUST_ANCHOR)
 
     async def add_nym(self, submitter_did, target_did, ver_key, alias, role,
-                      error_code=None, default_message: str = None):
+                      error_code=None, default_message: str = ""):
         """
         Build a send NYM request and submit it.
 
-        :param submitter_did: (optional) DID of request submitter
-        :param target_did: (optional) DID of request target
-        :param ver_key: (optional) ver_key of request target
-        :param alias: (optional)
-        :param role: (optional) role
-        :param error_code: the error_code that you expect
-        :param default_message: if there is no message, return default message
+        :param submitter_did: DID of request submitter
+        :param target_did: DID of request target
+        :param ver_key: ver_key of request target
+        :param alias:
+        :param role: role
+        :param error_code: (optional) the error_code that you expect
+        :param default_message: (optional)
+                                 if there is no message, return default message
         :return: (True, message) if send NYM successfully
                                  (message is result of send NYM).
                  (False, message) if send NYM failed
@@ -404,8 +407,8 @@ class RemoveAndAddRole(TestScenarioBase):
         """
         Build and submit GET NYM request.
 
-        :param submitter_did: (optional) DID of request submitter.
-        :param target_did: (optional) DID of request target.
+        :param submitter_did: DID of request submitter.
+        :param target_did: DID of request target.
         :return: (True, message) if GET_NYM is sent successfully
                                  (message is result of GET_NYM).
                  (False, message) if GET_NYM cannot be sent
@@ -424,6 +427,16 @@ class RemoveAndAddRole(TestScenarioBase):
 
     async def remove_role_and_check(self, submitter_did, target_did,
                                     target_verkey, alias, target_name):
+        """
+        Remove role and get NYM to check that role is removed successfully.
+
+        :param submitter_did:
+        :param target_did:
+        :param target_verkey:
+        :param alias:
+        :param target_name: name of targer (like Trustee1, Steward1,...)
+        :return: result of removing role and message
+        """
         (temp, temp_msg) = await self.add_nym(submitter_did, target_did,
                                               target_verkey, alias, Role.NONE)
 
