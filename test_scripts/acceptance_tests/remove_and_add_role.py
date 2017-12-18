@@ -9,12 +9,12 @@ import json
 
 from indy import ledger, signus
 
-from libraries import common
-from libraries.constant import pool_genesis_txn_file, \
+from utilities import common
+from utilities.constant import pool_genesis_txn_file, \
     seed_default_trustee
-from libraries import utils
-from libraries.constant import Color, Role
-from libraries.result import Status
+from utilities import utils
+from utilities.constant import Color, Role
+from utilities.result import Status
 from test_scripts.test_scenario_base import TestScenarioBase
 
 
@@ -417,11 +417,11 @@ class RemoveAndAddRole(TestScenarioBase):
 
         nym = await utils.perform(self.steps, ledger.build_get_nym_request,
                                   submitter_did, target_did)
-        if isinstance(nym, IndexError or Exception):
+        if isinstance(nym, Exception):
             return False, None
         result = await  utils.perform(self.steps, ledger.submit_request,
                                       self.pool_handle, nym)
-        if isinstance(result, IndexError or Exception):
+        if isinstance(result, Exception):
             return False, result
         return True, result
 

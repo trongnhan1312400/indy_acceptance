@@ -11,10 +11,10 @@ import os.path
 
 from indy import signus
 
-from libraries import common
-from libraries import constant
-from libraries.result import Status
-from libraries.utils import perform
+from utilities import common
+from utilities import constant
+from utilities.result import Status
+from utilities.utils import perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
 

@@ -10,8 +10,8 @@ import json
 
 from indy import pool, signus, wallet
 
-from libraries import constant
-from libraries.utils import perform
+from utilities import constant
+from utilities.utils import perform
 from test_scripts.test_scenario_base import TestScenarioBase
 
 

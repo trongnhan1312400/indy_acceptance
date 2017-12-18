@@ -11,10 +11,10 @@ import json
 
 from indy import ledger, signus
 
-from libraries import common
-from libraries.constant import seed_default_trustee
-from libraries.constant import Role
-from libraries.utils import perform, generate_random_string,\
+from utilities import common
+from utilities.constant import seed_default_trustee
+from utilities.constant import Role
+from utilities.utils import perform, generate_random_string,\
                             perform_with_expected_code
 from test_scripts.test_scenario_base import TestScenarioBase
 

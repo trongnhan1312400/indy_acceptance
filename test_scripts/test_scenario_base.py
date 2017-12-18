@@ -10,14 +10,14 @@ import inspect
 import os
 import time
 
-from libraries import common
-from libraries import constant
-from libraries import utils
-from libraries.constant import Color
-from libraries.logger import Logger
-from libraries.result import TestResult, Status
-from libraries.step import Steps
-from libraries.utils import generate_random_string, run_async_method,\
+from utilities import common
+from utilities import constant
+from utilities import utils
+from utilities.constant import Color
+from utilities.logger import Logger
+from utilities.result import TestResult, Status
+from utilities.step import Steps
+from utilities.utils import generate_random_string, run_async_method,\
                             make_final_result
 
 
