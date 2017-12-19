@@ -110,9 +110,11 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
 
 def run_async_method(method):
     """
-    Run async method until it complete.
-    We can customize this method to adapt situations.
+    Run async method until it complete.    
     :param method: The method want to run with event loop.
+    
+    @note: We can customize this method to adapt different situations
+           in the future.
     """
     import asyncio
     loop = asyncio.get_event_loop()
