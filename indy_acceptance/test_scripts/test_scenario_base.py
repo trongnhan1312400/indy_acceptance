@@ -5,7 +5,6 @@ Created on Nov 22, 2017
 
 Containing the test base class.
 """
-import asyncio
 import inspect
 import os
 import time

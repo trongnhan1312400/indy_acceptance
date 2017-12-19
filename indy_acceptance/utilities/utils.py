@@ -84,7 +84,8 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
     :param steps: list of test steps.
     :param func: executed function.
     :param agrs: arguments of "func".
-    :param expected_code: (optional) the error code that you expect in IndyError.
+    :param expected_code: (optional) the error code that you expect
+                          in IndyError.
     :return: exception if the "func" raise it without "expected_code".
              'None' if the "func" run without any exception of
              the exception contain "expected_code".
@@ -110,9 +111,9 @@ async def perform_with_expected_code(steps, func, *agrs, expected_code=0):
 
 def run_async_method(method):
     """
-    Run async method until it complete.    
+    Run async method until it complete.
     :param method: The method want to run with event loop.
-    
+
     @note: We can customize this method to adapt different situations
            in the future.
     """
