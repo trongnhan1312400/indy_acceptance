@@ -85,8 +85,6 @@ class TestScenarioBase():
         self.init_data_test()
         utils.print_with_color("\nTest case: {} ----> started\n"
                                .format(self.test_name), Color.BOLD)
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
         try:
             run_async_method(self.execute_precondition_steps)
             run_async_method(self.execute_test_steps)
@@ -97,11 +95,9 @@ class TestScenarioBase():
         finally:
             try:
                 run_async_method(self.execute_postcondition_steps)
-                loop.close()
             except Exception as e:
                 utils.print_error("\n{}\n".format(str(type(e))))
-            make_final_result(
-                self.test_result, self.steps.get_list_step(), begin_time,
-                self.logger)
+            make_final_result(self.test_result, self.steps.get_list_step(),
+                              begin_time, self.logger)
             utils.print_with_color("Test case: {} ----> finished\n".
                                    format(self.test_name), Color.BOLD)
